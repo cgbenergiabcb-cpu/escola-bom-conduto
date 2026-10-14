@@ -1,80 +1,160 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escola do Bom Condutor - CGB Energia</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 500: '#0066ff', 600: '#0052cc' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-slate-50 min-h-screen font-sans">
-    <header class="bg-slate-900 text-white shadow-md">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div>
-                <h1 class="text-lg font-bold tracking-wide">ESCOLA DO BOM CONDUTOR</h1>
-                <p class="text-xs text-yellow-400">CGB Energia - Segurança e Direção Defensiva</p>
-            </div>
-            <span class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300">Sistema Oficial v2.3</span>
+<body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <span class="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">ESCOLA DO BOM CONDUTOR - CGB</span>
+            
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <span id="nav-inicio" class="text-brand-500 font-bold cursor-pointer">1. Início</span>
+                <span id="nav-identificar" class="text-slate-400 cursor-pointer">2. Identificar</span>
+                <span id="nav-instrucoes" class="text-slate-400 cursor-pointer">3. Instruções</span>
+                <span id="nav-prova" class="text-slate-400 cursor-pointer">4. Prova</span>
+            </nav>
+
+            <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                <span id="theme-icon">🌙</span>
+            </button>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-8">
-        <section id="step-collab" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <h2 class="text-xl font-bold text-slate-800 mb-2">Identificação do Colaborador</h2>
-            <p class="text-sm text-slate-500 mb-6">Digite seu nome ou número de matrícula para iniciar a avaliação oficial.</p>
+    <!-- Main Content Area -->
+    <main class="max-w-4xl mx-auto px-6 py-12 flex-grow flex flex-col justify-center w-full">
+        
+        <!-- STEP 1: Welcome / Home -->
+        <div id="view-inicio" class="text-center space-y-6">
+            <div class="inline-block p-4 rounded-full bg-slate-800 border border-slate-700 shadow-xl mb-2">
+                <div class="w-8 h-8 rounded-full bg-brand-500 animate-pulse mx-auto"></div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white">Escola do Bom Condutor</h1>
+            <p class="text-slate-400 max-w-lg mx-auto text-base">Segurança no trânsito começa com conhecimento, responsabilidade e atitude.</p>
+            <div class="pt-4">
+                <button onclick="goToStep('identificar')" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-brand-500/20 transition duration-200 text-lg">
+                    INICIAR AVALIAÇÃO
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Identificação -->
+        <div id="view-identificar" class="hidden bg-slate-800/50 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
+            <h2 class="text-2xl font-bold text-white">Identificação do Colaborador</h2>
+            <p class="text-slate-400 text-sm">Pesquise seu nome ou matrícula para iniciar o teste da CGB Energia.</p>
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Pesquisar na Base de Dados</label>
-                    <input type="text" id="search-input" placeholder="Ex: Marcus Vinicius, 12375 ou Bacabal..." class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800">
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Pesquisar Colaborador</label>
+                    <input type="text" id="search-input" placeholder="Ex: Marcus Vinicius, 12375 ou Bacabal..." class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-white">
                 </div>
+                <div id="results-container" class="hidden bg-slate-900 border border-slate-700 rounded-xl max-h-48 overflow-y-auto divide-y divide-slate-800"></div>
 
-                <div id="results-container" class="hidden bg-slate-50 border border-slate-200 rounded-lg max-h-48 overflow-y-auto divide-y divide-slate-200"></div>
-
-                <div id="selected-collab" class="hidden bg-yellow-50 border border-yellow-200 p-4 rounded-lg flex justify-between items-center">
+                <div id="selected-collab" class="hidden bg-brand-500/10 border border-brand-500/30 p-4 rounded-xl flex justify-between items-center">
                     <div>
-                        <p class="text-xs font-semibold text-yellow-800 uppercase">Colaborador Selecionado:</p>
-                        <p id="collab-name-display" class="font-bold text-slate-900 text-lg"></p>
-                        <p id="collab-info-display" class="text-xs text-slate-600"></p>
+                        <p class="text-xs font-semibold text-brand-400 uppercase">Selecionado:</p>
+                        <p id="collab-name-display" class="font-bold text-white text-base"></p>
+                        <p id="collab-info-display" class="text-xs text-slate-400"></p>
                     </div>
-                    <button onclick="resetCollab()" class="text-xs text-red-600 hover:underline font-medium">Alterar</button>
+                    <button onclick="resetCollab()" class="text-xs text-red-400 hover:underline">Alterar</button>
                 </div>
 
-                <button id="btn-start" onclick="startQuiz()" disabled class="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                    Iniciar Avaliação Teórica
+                <button id="btn-to-instrucoes" onclick="goToStep('instrucoes')" disabled class="w-full bg-brand-500 text-white py-3.5 rounded-xl font-medium hover:bg-brand-600 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Avançar para Instruções
                 </button>
             </div>
-        </section>
+        </div>
 
-        <section id="step-quiz" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
-                <span id="quiz-progress" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Questão 1 de 5</span>
-                <span id="quiz-timer" class="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-700">⏱️ Direção Defensiva</span>
+        <!-- STEP 3: Instruções & Seleção de Veículo -->
+        <div id="view-instrucoes" class="hidden bg-slate-800/50 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
+            <h2 class="text-2xl font-bold text-white">Instruções da Prova Teórica</h2>
+            <p class="text-slate-400 text-sm">Selecione o tipo de veículo operado para carregar o questionário correspondente:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <label class="border border-slate-700 bg-slate-900 p-4 rounded-xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3">
+                    <input type="radio" name="veiculo" value="Motocicleta" checked class="text-brand-500 focus:ring-brand-500">
+                    <span class="font-medium text-white">Motocicleta</span>
+                </label>
+                <label class="border border-slate-700 bg-slate-900 p-4 rounded-xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3">
+                    <input type="radio" name="veiculo" value="Carro/Caminhonete" class="text-brand-500 focus:ring-brand-500">
+                    <span class="font-medium text-white">Carro / Caminhonete</span>
+                </label>
+                <label class="border border-slate-700 bg-slate-900 p-4 rounded-xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3">
+                    <input type="radio" name="veiculo" value="Caminhao" class="text-brand-500 focus:ring-brand-500">
+                    <span class="font-medium text-white">Caminhão</span>
+                </label>
             </div>
 
-            <h3 id="question-text" class="text-lg font-semibold text-slate-800 mb-6"></h3>
-
-            <div id="options-container" class="space-y-3 mb-8"></div>
-
-            <button id="btn-next" onclick="nextQuestion()" disabled class="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                Próxima Questão
+            <button onclick="goToStep('prova')" class="w-full bg-brand-500 text-white py-3.5 rounded-xl font-medium hover:bg-brand-600 transition">
+                Iniciar Prova Agora
             </button>
-        </section>
+        </div>
 
-        <section id="step-result" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-            <div id="result-icon" class="text-5xl mb-4">🏆</div>
-            <h2 id="result-title" class="text-2xl font-bold text-slate-900 mb-2">Avaliação Concluída!</h2>
-            <p id="result-desc" class="text-slate-600 mb-6">O seu registo foi processado com sucesso.</p>
-            <div class="bg-slate-50 p-4 rounded-lg max-w-xs mx-auto mb-6">
-                <span class="text-xs text-slate-500 block">Pontuação Final</span>
-                <span id="result-score" class="text-3xl font-bold text-slate-900">100%</span>
+        <!-- STEP 4: Prova / Quiz -->
+        <div id="view-prova" class="hidden space-y-6">
+            <div class="flex justify-between items-center bg-slate-800/50 border border-slate-800 px-6 py-4 rounded-2xl">
+                <div>
+                    <span id="quiz-category" class="text-xs font-mono uppercase text-brand-400 tracking-wider">MOTOCICLETA</span>
+                    <h3 id="quiz-progress" class="text-lg font-bold text-white">Questão 1 de 5</h3>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-900 border border-slate-700 px-4 py-2 rounded-xl">
+                    <span>⏱️</span>
+                    <span id="quiz-timer" class="font-mono text-brand-400 font-bold">59:58</span>
+                </div>
             </div>
-            <button onclick="location.reload()" class="bg-slate-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-800 transition">
-                Nova Avaliação
+
+            <div class="bg-slate-800/50 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
+                <h4 id="question-text" class="text-xl font-semibold text-white leading-relaxed"></h4>
+                <div id="options-container" class="space-y-3"></div>
+            </div>
+
+            <div class="flex justify-between">
+                <button onclick="prevQuestion()" id="btn-prev" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-xl font-medium transition">Anterior</button>
+                <button onclick="nextQuestion()" id="btn-next" disabled class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3 rounded-xl font-medium transition disabled:opacity-50 disabled:cursor-not-allowed">Próxima</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: Resultado -->
+        <div id="view-resultado" class="hidden bg-slate-800/50 border border-slate-800 rounded-2xl p-10 text-center space-y-6 shadow-xl">
+            <div class="text-6xl mb-2">🏆</div>
+            <h2 id="result-title" class="text-3xl font-bold text-white">Avaliação Concluída!</h2>
+            <p id="result-desc" class="text-slate-400 text-sm max-w-md mx-auto"></p>
+            <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-xs mx-auto space-y-1">
+                <span class="text-xs text-slate-400 uppercase tracking-widest">Pontuação Final</span>
+                <span id="result-score" class="text-4xl font-extrabold text-brand-400">100%</span>
+            </div>
+            <button onclick="location.reload()" class="bg-brand-500 text-white px-8 py-3.5 rounded-xl font-medium hover:bg-brand-600 transition">
+                Realizar Nova Avaliação
             </button>
-        </section>
+        </div>
+
     </main>
 
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 text-center py-6 text-xs text-slate-500">
+        Escola do Bom Condutor • CGB Energia &copy; 2026
+    </footer>
+
+    <!-- Script Lógica Completa -->
     <script>
+        let currentStep = 'inicio';
         let selectedCollabData = null;
         let currentQuestionIndex = 0;
         let score = 0;
@@ -110,147 +190,4 @@
                 correct: 1
             },
             {
-                text: "Em caso de pista molhada, aquaplanagem ou chuva forte nas bases operacionais, qual o procedimento correto?",
-                options: [
-                    "Manter a velocidade máxima permitida da via e pisar fundo no freio.",
-                    "Reduzir a velocidade, evitar freadas bruscas e aumentar a distância do veículo à frente.",
-                    "Utilizar o pisca-alerta ligado com o veículo em movimento na rodovia principal.",
-                    "Continuar na mesma velocidade caso os pneus estejam carecas."
-                ],
-                correct: 1
-            },
-            {
-                text: "O uso do cinto de segurança e verificação dos itens obrigatórios do veículo aplicam-se a:",
-                options: [
-                    "Apenas ao condutor e em viagens com mais de 50 quilómetros.",
-                    "Somente aos passageiros sentados no banco dianteiro.",
-                    "Todos os ocupantes do veículo, em qualquer deslocamento a serviço.",
-                    "Apenas quando houver fiscalização rodoviária na pista."
-                ],
-                correct: 2
-            },
-            {
-                text: "Qual a conduta obrigatória antes de iniciar qualquer deslocamento com veículos da frota?",
-                options: [
-                    "Acelerar o motor imediatamente para aquecer.",
-                    "Realizar o checklist de inspeção visual (pneus, fluidos, iluminação e freios) e ajuste de espelhos.",
-                    "Conectar o telemóvel ao sistema de som sem olhar.",
-                    "Verificar apenas o nível de combustível."
-                ],
-                correct: 1
-            }
-        ];
-
-        const searchInput = document.getElementById('search-input');
-        const resultsContainer = document.getElementById('results-container');
-
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            if (query.length < 2) {
-                resultsContainer.classList.add('hidden');
-                return;
-            }
-
-            const filtered = colaboradoresData.filter(c => 
-                c.nome.toLowerCase().includes(query) || 
-                c.matricula.toLowerCase().includes(query) || 
-                c.base.toLowerCase().includes(query)
-            );
-
-            if (filtered.length > 0) {
-                resultsContainer.innerHTML = filtered.map(c => `
-                    <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3 hover:bg-slate-100 cursor-pointer text-sm">
-                        <p class="font-bold text-slate-800">${c.nome}</p>
-                        <p class="text-xs text-slate-500">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
-                    </div>
-                `).join('');
-                resultsContainer.classList.remove('hidden');
-            } else {
-                resultsContainer.innerHTML = '<div class="p-3 text-xs text-slate-500">Nenhum colaborador encontrado.</div>';
-                resultsContainer.classList.remove('hidden');
-            }
-        });
-
-        function selectCollab(collab) {
-            selectedCollabData = collab;
-            searchInput.value = '';
-            resultsContainer.classList.add('hidden');
-            
-            document.getElementById('collab-name-display').textContent = collab.nome;
-            document.getElementById('collab-info-display').textContent = `Matrícula: ${collab.matricula} • ${collab.funcao} (${collab.base})`;
-            
-            document.getElementById('selected-collab').classList.remove('hidden');
-            document.getElementById('btn-start').disabled = false;
-        }
-
-        function resetCollab() {
-            selectedCollabData = null;
-            document.getElementById('selected-collab').classList.add('hidden');
-            document.getElementById('btn-start').disabled = true;
-        }
-
-        function startQuiz() {
-            if (!selectedCollabData) return;
-            document.getElementById('step-collab').classList.add('hidden');
-            document.getElementById('step-quiz').classList.remove('hidden');
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            const q = questions[currentQuestionIndex];
-            document.getElementById('quiz-progress').textContent = `Questão ${currentQuestionIndex + 1} de ${questions.length}`;
-            document.getElementById('question-text').textContent = q.text;
-            
-            const optionsHtml = q.options.map((opt, index) => {
-                const letters = ['A', 'B', 'C', 'D', 'E'];
-                return `
-                    <label class="flex items-center p-3 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition">
-                        <input type="radio" name="option" value="${index}" onclick="enableNext()" class="mr-3 text-slate-900 focus:ring-slate-900">
-                        <span class="text-sm text-slate-700"><b>${letters[index]})</b> ${opt}</span>
-                    </label>
-                `;
-            }).join('');
-            
-            document.getElementById('options-container').innerHTML = optionsHtml;
-            document.getElementById('btn-next').disabled = true;
-        }
-
-        function enableNext() {
-            document.getElementById('btn-next').disabled = false;
-        }
-
-        function nextQuestion() {
-            const selected = document.querySelector('input[name="option"]:checked');
-            if (!selected) return;
-
-            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
-                score++;
-            }
-
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
-        }
-
-        function showResult() {
-            document.getElementById('step-quiz').classList.add('hidden');
-            document.getElementById('step-result').classList.remove('hidden');
-            
-            const percentage = Math.round((score / questions.length) * 100);
-            document.getElementById('result-score').textContent = `${percentage}%`;
-            
-            if (percentage >= 70) {
-                document.getElementById('result-title').textContent = "Aprovado com Sucesso!";
-                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, você concluiu a avaliação da Escola do Bom Condutor.`;
-            } else {
-                document.getElementById('result-icon').textContent = "⚠️";
-                document.getElementById('result-title').textContent = "Necessita Revisão";
-                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, reveja os conceitos de direção defensiva.`;
-            }
-        }
-    </script>
-</body>
-</html>
+                text: "Em caso
