@@ -1,263 +1,515 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Escola do Bom Condutor - CGB Energia</title>
+    <title>Escola do Bom Condutor - Preview V4</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-slate-50 min-h-screen font-sans">
-
-    <!-- Header / Navbar -->
-    <header class="bg-slate-900 text-white shadow-md">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div>
-                <h1 class="text-lg font-bold tracking-wide">ESCOLA DO BOM CONDUTOR</h1>
-                <p class="text-xs text-yellow-400">CGB Energia - Segurança e Direção Defensiva</p>
-            </div>
-            <span class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300">Sistema Oficial v2.1</span>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="max-w-4xl mx-auto px-4 py-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brandNavy: '#101C2C',
+                        brandBlue: '#1677FF',
+                        brandCyan: '#36D6E7',
+                        brandBg: '#F4F7FB',
+                        brandText: '#172337',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .hidden { display: none !important; }
         
-        <!-- Etapa 1: Identificação do Colaborador -->
-        <section id="step-collab" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <h2 class="text-xl font-bold text-slate-800 mb-2">Identificação do Colaborador</h2>
-            <p class="text-sm text-slate-500 mb-6">Digite seu nome ou número de matrícula para iniciar a avaliação oficial.</p>
+        .dark body { background-color: #0B1120; color: #E2E8F0; }
+        .dark .bg-white { background-color: #1E293B; border-color: #334155; }
+        .dark .bg-brandBg { background-color: #0B1120; }
+        .dark .text-brandNavy { color: #F8FAFC; }
+        .dark .text-brandText { color: #E2E8F0; }
+        .dark .border-gray-200 { border-color: #334155; }
+        .dark .bg-gray-50 { background-color: #0F172A; }
+        .dark input, .dark select { background-color: #0F172A; color: white; border-color: #334155; }
+        .dark .shadow-sm { box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5); }
+        
+        /* Custom scrollbar for autocomplete */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #475569; }
+    </style>
+</head>
+<body class="bg-brandBg text-brandText font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+
+    <div class="bg-white border-b border-gray-200 p-4 flex justify-between items-center shadow-sm relative z-50">
+        <div class="text-xs font-bold text-gray-400 dark:text-gray-500">MOCKUP V4 (AUTOCOMPLETE COM BASE DE DADOS REAL)</div>
+        <div class="flex gap-4 items-center overflow-x-auto whitespace-nowrap">
+            <button onclick="showScreen('home')" class="text-sm font-medium text-brandBlue hover:underline">1. Início</button>
+            <button onclick="showScreen('identificacao')" class="text-sm font-medium text-brandBlue hover:underline">2. Identificar</button>
+            <button onclick="showScreen('instrucoes')" class="text-sm font-medium text-brandBlue hover:underline hidden" id="nav-inst">3. Instruções</button>
+            <button onclick="showScreen('prova')" class="text-sm font-medium text-brandBlue hover:underline hidden" id="nav-prova">4. Prova</button>
+            <div class="w-px h-4 bg-gray-300 dark:bg-gray-600 mx-2"></div>
+            <button onclick="toggleTheme()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" title="Mudar Tema">
+                <i class="fa-solid fa-moon dark:hidden"></i>
+                <i class="fa-solid fa-sun hidden dark:block"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- TELA 1: HOME -->
+    <main id="screen-home" class="flex-1 flex flex-col items-center justify-center p-6 bg-gradient-to-b from-brandNavy to-gray-900 text-white fade-in">
+        <div class="max-w-md w-full flex flex-col items-center text-center space-y-8">
+            <div class="bg-white/10 p-5 rounded-2xl shadow-lg backdrop-blur-md">
+                <i class="fa-solid fa-shield-check text-6xl text-brandCyan"></i>
+            </div>
             
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Pesquisar na Base de Dados</label>
-                    <input type="text" id="search-input" placeholder="Ex: Marcus Vinicius, 12375 ou Bacabal..." class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-slate-900 focus:outline-none text-slate-800">
-                </div>
+            <div class="space-y-3">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight">Escola do Bom Condutor</h1>
+                <p class="text-gray-300 text-sm md:text-base font-light px-4">
+                    Segurança no trânsito começa com conhecimento, responsabilidade e atitude.
+                </p>
+            </div>
 
-                <div id="results-container" class="hidden bg-slate-50 border border-slate-200 rounded-lg max-h-48 overflow-y-auto divide-y divide-slate-200">
-                    <!-- Resultados da busca -->
-                </div>
-
-                <div id="selected-collab" class="hidden bg-yellow-50 border border-yellow-200 p-4 rounded-lg flex justify-between items-center">
-                    <div>
-                        <p class="text-xs font-semibold text-yellow-800 uppercase">Colaborador Selecionado:</p>
-                        <p id="collab-name-display" class="font-bold text-slate-900 text-lg"></p>
-                        <p id="collab-info-display" class="text-xs text-slate-600"></p>
-                    </div>
-                    <button onclick="resetCollab()" class="text-xs text-red-600 hover:underline font-medium">Alterar</button>
-                </div>
-
-                <button id="btn-start" onclick="startQuiz()" disabled class="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                    Iniciar Avaliação Teórica
+            <div class="w-full pt-8 px-4">
+                <button onclick="showScreen('identificacao')" class="block w-full rounded-xl bg-brandBlue px-4 py-4 text-center text-lg font-semibold text-white shadow-lg shadow-brandBlue/30 hover:bg-blue-600 transition-all active:scale-95">
+                    INICIAR AVALIAÇÃO
                 </button>
             </div>
-        </section>
-
-        <!-- Etapa 2: Quiz / Avaliação -->
-        <section id="step-quiz" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-100">
-                <span id="quiz-progress" class="text-xs font-bold text-slate-500 uppercase tracking-wider">Questão 1 de 5</span>
-                <span id="quiz-timer" class="text-xs font-mono bg-slate-100 px-2 py-1 rounded text-slate-700">⏱️ Direção Defensiva</span>
-            </div>
-
-            <h3 id="question-text" class="text-lg font-semibold text-slate-800 mb-6"></h3>
-
-            <div id="options-container" class="space-y-3 mb-8">
-                <!-- Opções -->
-            </div>
-
-            <button id="btn-next" onclick="nextQuestion()" disabled class="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                Próxima Questão
-            </button>
-        </section>
-
-        <!-- Etapa 3: Resultado -->
-        <section id="step-result" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-            <div id="result-icon" class="text-5xl mb-4">🏆</div>
-            <h2 id="result-title" class="text-2xl font-bold text-slate-900 mb-2">Avaliação Concluída!</h2>
-            <p id="result-desc" class="text-slate-600 mb-6">O seu registo foi processado com sucesso.</p>
-            <div class="bg-slate-50 p-4 rounded-lg max-w-xs mx-auto mb-6">
-                <span class="text-xs text-slate-500 block">Pontuação Final</span>
-                <span id="result-score" class="text-3xl font-bold text-slate-900">100%</span>
-            </div>
-            <button onclick="location.reload()" class="bg-slate-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-800 transition">
-                Nova Avaliação
-            </button>
-        </section>
-
+        </div>
     </main>
 
-    <!-- Script de Execução Local Estável -->
+    <!-- TELA 2: IDENTIFICAÇÃO (INTEGRADA COM DB) -->
+    <main id="screen-identificacao" class="flex-1 flex flex-col items-center py-12 px-4 hidden fade-in">
+        <div class="w-full max-w-lg bg-white rounded-2xl shadow-sm border border-gray-200 overflow-visible relative">
+            <div class="bg-brandNavy p-6 text-white rounded-t-2xl">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fa-solid fa-address-card text-brandCyan"></i>
+                    Identificação do Colaborador
+                </h2>
+                <p class="text-gray-300 text-sm mt-2">Busque seu nome. O sistema preencherá sua matrícula, base e função automaticamente.</p>
+            </div>
+            
+            <div class="p-6 space-y-5" id="form-section">
+                <!-- Autocomplete Input -->
+                <div class="relative">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome Completo</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" id="input-nome" placeholder="Digite seu nome para buscar..." oninput="filterColaboradores(this.value)" onfocus="filterColaboradores(this.value)" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-brandBlue focus:ring-2 focus:ring-brandBlue/20 outline-none transition-all">
+                        <button id="btn-clear-nome" onclick="clearNome()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 hidden">
+                            <i class="fa-solid fa-times-circle"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Autocomplete Dropdown -->
+                    <div id="autocomplete-dropdown" class="absolute z-50 w-full mt-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-xl max-h-60 overflow-y-auto hidden custom-scrollbar">
+                        <!-- Items injectados via JS -->
+                    </div>
+                </div>
+
+                <!-- Dados extraídos do DB (Somente Leitura) -->
+                <div id="dados-db-container" class="grid grid-cols-2 gap-4 hidden fade-in">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Matrícula</label>
+                        <div id="lbl-matricula-form" class="w-full px-4 py-2 bg-gray-100 dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-gray-700 dark:text-gray-300"></div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Base</label>
+                        <div id="lbl-base-form" class="w-full px-4 py-2 bg-gray-100 dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-gray-700 dark:text-gray-300"></div>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Função</label>
+                        <div id="lbl-funcao-form" class="w-full px-4 py-2 bg-gray-100 dark:bg-slate-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-semibold text-gray-700 dark:text-gray-300"></div>
+                    </div>
+                </div>
+                
+                <hr class="border-gray-200 dark:border-gray-700">
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Gerência <span class="text-red-500">*</span></label>
+                    <select id="select-gerencia" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-brandBlue focus:ring-2 focus:ring-brandBlue/20 outline-none transition-all">
+                        <option value="">Selecione a gerência...</option>
+                        <option value="GOMAN">GOMAN</option>
+                        <option value="GSTC">GSTC</option>
+                        <option value="GERE">GERE</option>
+                        <option value="ADM">ADM</option>
+                        <option value="FROTA">FROTA</option>
+                        <option value="ALMOX">ALMOX</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Veículo de Avaliação <span class="text-red-500">*</span></label>
+                    <select id="select-veiculo" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:border-brandBlue focus:ring-2 focus:ring-brandBlue/20 outline-none transition-all">
+                        <option value="">Selecione o veículo...</option>
+                        <option value="Motocicleta">Motocicleta</option>
+                        <option value="Carro/Caminhonete">Carro/Caminhonete</option>
+                    </select>
+                </div>
+
+                <div class="pt-4">
+                    <button onclick="submitForm()" class="w-full py-3 px-4 rounded-lg bg-brandBlue text-white font-medium shadow-md shadow-brandBlue/20 hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        Confirmar e Prosseguir
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resumo da Confirmação -->
+            <div class="p-6 space-y-6 hidden fade-in" id="confirm-section">
+                <div class="bg-green-50 dark:bg-green-900/20 p-5 rounded-xl border border-green-200 dark:border-green-800 space-y-4">
+                    <h3 class="font-bold text-green-800 dark:text-green-300 border-b border-green-200 dark:border-green-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-check-circle text-lg"></i> Tudo pronto para a avaliação!
+                    </h3>
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-4 text-sm">
+                        <div class="col-span-2"><span class="text-green-700 dark:text-green-400 block text-xs uppercase">Nome:</span> <span id="lbl-nome" class="font-semibold dark:text-white"></span></div>
+                        <div><span class="text-green-700 dark:text-green-400 block text-xs uppercase">Matrícula:</span> <span id="lbl-mat-final" class="font-semibold dark:text-white"></span></div>
+                        <div><span class="text-green-700 dark:text-green-400 block text-xs uppercase">Base:</span> <span id="lbl-base-final" class="font-semibold dark:text-white"></span></div>
+                        <div class="col-span-2"><span class="text-green-700 dark:text-green-400 block text-xs uppercase">Função:</span> <span id="lbl-func-final" class="font-semibold dark:text-white"></span></div>
+                        <div class="col-span-2 border-t border-green-200 dark:border-green-800 pt-2"><span class="text-green-700 dark:text-green-400 block text-xs uppercase">Gerência Selecionada:</span> <span id="lbl-gerencia" class="font-semibold dark:text-white"></span></div>
+                        <div class="col-span-2"><span class="text-green-700 dark:text-green-400 block text-xs uppercase">Veículo de Avaliação:</span> <span id="lbl-veic" class="font-bold text-brandBlue dark:text-brandCyan"></span></div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3">
+                    <button onclick="resetForm()" class="flex-1 py-3 px-4 rounded-lg border border-gray-200 font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                        Voltar e Editar
+                    </button>
+                    <button onclick="goToInstructions()" class="flex-1 py-3 px-4 rounded-lg bg-brandBlue text-white font-medium shadow-md shadow-brandBlue/20 hover:bg-blue-600 transition-colors">
+                        Avançar <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TELA 2.5: INSTRUÇÕES DA PROVA -->
+    <main id="screen-instrucoes" class="flex-1 flex flex-col items-center py-12 px-4 hidden fade-in">
+        <div class="w-full max-w-2xl bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="p-8 space-y-6">
+                <div class="flex items-center gap-4 text-brandNavy mb-6 border-b border-gray-200 pb-6">
+                    <div class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-brandBlue">
+                        <i class="fa-solid fa-clipboard-list text-2xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold">Instruções da Avaliação</h2>
+                        <p class="text-gray-500 text-sm font-medium" id="inst-veiculo">Categoria: </p>
+                    </div>
+                </div>
+
+                <ul class="space-y-4 text-gray-600 dark:text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                        <span>A prova é composta por <strong>30 questões</strong> de múltipla escolha baseadas no seu tipo de veículo.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-check text-green-500 mt-1"></i>
+                        <span>Cada questão possui 5 alternativas (A, B, C, D, E), sendo apenas uma correta.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-clock text-orange-500 mt-1"></i>
+                        <span>Você terá <strong>60 minutos</strong> para concluir. O cronômetro não para se você fechar a aba.</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <i class="fa-solid fa-ban text-red-500 mt-1"></i>
+                        <span>Não é permitido retornar à prova após clicar em "Finalizar Prova" na última questão.</span>
+                    </li>
+                </ul>
+
+                <div class="pt-6">
+                    <button onclick="startProva()" class="w-full py-4 rounded-xl bg-brandNavy text-white font-bold text-lg hover:bg-gray-800 transition-colors shadow-lg">
+                        ESTOU PRONTO, INICIAR AVALIAÇÃO
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TELA 3: PROVA TEÓRICA -->
+    <main id="screen-prova" class="flex-1 flex flex-col hidden fade-in max-w-3xl mx-auto w-full pb-20">
+        
+        <div class="sticky top-0 bg-white dark:bg-slate-900 border-b border-gray-200 p-4 shadow-sm z-40 mb-6 flex justify-between items-center">
+            <div>
+                <p class="text-xs text-gray-500 uppercase tracking-widest font-semibold" id="prova-header-veic">CARRO/CAMINHONETE</p>
+                <h3 class="font-bold text-brandNavy flex items-center gap-2">
+                    Questão <span id="q-atual" class="text-brandBlue">1</span> de <span id="q-total">30</span>
+                </h3>
+            </div>
+            <div class="flex items-center gap-2 text-orange-600 dark:text-orange-400 font-mono font-bold bg-orange-50 dark:bg-orange-900/20 px-3 py-1.5 rounded-lg border border-orange-200 dark:border-orange-800">
+                <i class="fa-regular fa-clock"></i> 59:58
+            </div>
+        </div>
+
+        <div class="px-4">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-6">
+                <p class="text-lg font-medium text-brandText mb-8 leading-relaxed" id="questao-texto">
+                    Carregando...
+                </p>
+
+                <div class="space-y-3" id="alternativas-container">
+                </div>
+            </div>
+
+            <div class="flex justify-between gap-4">
+                <button onclick="prevQuestion()" id="btn-prev" class="px-6 py-3 rounded-xl border border-gray-300 font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors disabled:opacity-50">
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Anterior
+                </button>
+                <button onclick="nextQuestion()" id="btn-next" class="px-6 py-3 rounded-xl bg-brandBlue text-white font-medium hover:bg-blue-600 transition-colors shadow-md">
+                    Próxima <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
     <script>
-        let selectedCollabData = null;
+        // O Banco de dados dos funcionários foi omitido neste exemplo visual por tamanho,
+        // mas estou injetando um array de teste. No link oficial puxaremos o DB completo.
+        const dbColaboradores = [{"nome": "ABEL RODRIGUES DE ARAUJO", "matricula": "14035", "funcao": "ELETRICISTA", "base": "BACABAL"}, {"nome": "ABRAAO DOS SANTOS SILVA", "matricula": "13795", "funcao": "ELETRICISTA", "base": "BACABAL"}, {"nome": "FRANCISCO ANTONIO DA SILVA", "matricula": "12345", "funcao": "MOTORISTA", "base": "BACABAL"}, {"nome": "FRANCISCO JOSE PEREIRA", "matricula": "67890", "funcao": "TECNICO", "base": "SANTA INES"}];
+
+        let currentVehicle = '';
         let currentQuestionIndex = 0;
-        let score = 0;
+        let selectedAnswers = {}; 
+        let selectedColaborador = null;
 
-        const colaboradoresData = [
-            { nome: "MARCUS VINICIUS SILVA QUEIROS", matricula: "12375", funcao: "ANALISTA DE QUALIDADE I", base: "BACABAL" },
-            { nome: "ABEL RODRIGUES DE ARAUJO", matricula: "14035", funcao: "ELETRICISTA", base: "BACABAL" },
-            { nome: "ABRAAO DOS SANTOS SILVA", matricula: "13795", funcao: "ELETRICISTA", base: "BACABAL" },
-            { nome: "ANTONIO CARLOS SILVA", matricula: "12501", funcao: "ENCARREGADO DE TURMA", base: "BACABAL" },
-            { nome: "FRANCISCO DAS CHAGAS LIMA", matricula: "11982", funcao: "MOTORISTA OPERACIONAL", base: "BACABAL" }
-        ];
+        const bancoMoto = [{"q": "O que é pilotagem defensiva?", "opts": [{"id": "A", "txt": "Pilotar sempre no limite de velocidade permitido."}, {"id": "B", "txt": "Agir de forma a prevenir acidentes, independente das condições da via e das ações dos outros."}, {"id": "C", "txt": "Dar preferência apenas aos pedestres."}, {"id": "D", "txt": "Fazer ultrapassagens rápidas para evitar pontos cegos."}, {"id": "E", "txt": "Conduzir exclusivamente pelo centro da pista."}]}, {"q": "Quais são os cinco elementos básicos da direção defensiva?", "opts": [{"id": "A", "txt": "Aceleração, frenagem, equilíbrio, visão e reflexo."}, {"id": "B", "txt": "Atenção, ação, previsão, conhecimento e habilidade."}, {"id": "C", "txt": "Velocidade, manutenção, sinalização, ultrapassagem e postura."}, {"id": "D", "txt": "Educação, respeito, paciência, calma e sinalização."}, {"id": "E", "txt": "Cinto, capacete, retrovisor, buzina e farol."}]}, {"q": "Qual é a distância de seguimento segura recomendada entre o seu veículo e o da frente?", "opts": [{"id": "A", "txt": "Exatamente 1 metro, independentemente da velocidade."}, {"id": "B", "txt": "Uma distância que permita parar o veículo sem colidir, caso o da frente freie bruscamente."}, {"id": "C", "txt": "Apenas o suficiente para não bater no para-choque traseiro."}, {"id": "D", "txt": "Sempre 15 metros, em qualquer situação."}, {"id": "E", "txt": "Menos de meio carro, para economizar combustível."}]}, {"q": "O que o motociclista deve fazer ao se aproximar de um cruzamento com semáforo?", "opts": [{"id": "A", "txt": "Acelerar para passar antes que o sinal fique vermelho."}, {"id": "B", "txt": "Reduzir a velocidade e observar o fluxo, mesmo que o sinal esteja verde para ele."}, {"id": "C", "txt": "Manter a velocidade e buzinar para alertar os outros."}, {"id": "D", "txt": "Parar totalmente no cruzamento para checar se há pedestres."}, {"id": "E", "txt": "Mudar para a faixa da esquerda obrigatoriamente."}]}, {"q": "Em caso de chuva, a aderência dos pneus com o piso diminui. Qual é a conduta correta?", "opts": [{"id": "A", "txt": "Manter a velocidade normal e frear com mais força."}, {"id": "B", "txt": "Aumentar a velocidade para atravessar o trecho alagado rapidamente."}, {"id": "C", "txt": "Reduzir a velocidade, evitar freadas bruscas e aumentar a distância de seguimento."}, {"id": "D", "txt": "Ligar o pisca-alerta e continuar pilotando no corredor."}, {"id": "E", "txt": "Parar a moto imediatamente no acostamento ou no meio da via."}]}, {"q": "Como o motociclista deve sinalizar a intenção de mudar de faixa?", "opts": [{"id": "A", "txt": "Olhando apenas pelo retrovisor."}, {"id": "B", "txt": "Buzinando duas vezes antes da manobra."}, {"id": "C", "txt": "Utilizando os retrovisores, os indicadores de direção (seta) e certificando-se da segurança."}, {"id": "D", "txt": "Dando sinal de braço, sem a necessidade de olhar para trás."}, {"id": "E", "txt": "Mudando de faixa rapidamente para surpreender os motoristas."}]}, {"q": "O que é a aquaplanagem (ou hidroplanagem)?", "opts": [{"id": "A", "txt": "Falha mecânica nos freios causada por excesso de água."}, {"id": "B", "txt": "Perda de contato do pneu com o solo devido a uma camada de água na pista."}, {"id": "C", "txt": "Superaquecimento do motor em dias de chuva."}, {"id": "D", "txt": "Desgaste irregular da banda de rodagem."}, {"id": "E", "txt": "Acúmulo de água no escapamento."}]}, {"q": "Onde se encontra o \"ponto cego\" de um veículo de grande porte (como um caminhão)?", "opts": [{"id": "A", "txt": "Apenas na frente do veículo."}, {"id": "B", "txt": "Somente no lado esquerdo do motorista."}, {"id": "C", "txt": "Diretamente atrás do veículo e nas laterais onde o retrovisor não alcança."}, {"id": "D", "txt": "Nos primeiros 5 metros à frente da cabine."}, {"id": "E", "txt": "Em nenhuma área, já que caminhões possuem retrovisores grandes."}]}, {"q": "Para garantir melhor visibilidade no trânsito, o motociclista deve:", "opts": [{"id": "A", "txt": "Pilotar com o farol apagado durante o dia."}, {"id": "B", "txt": "Circular sempre atrás de veículos grandes para proteger-se do vento"}, {"id": "C", "txt": "Usar roupas escuras para facilitar a concentração."}, {"id": "D", "txt": "Manter o farol aceso (mesmo de dia), usar roupas claras/refletivas e evitar os pontos cegos dos carros."}, {"id": "E", "txt": "Posicionar-se colado na traseira dos automóveis."}]}, {"q": "Qual é a postura corporal correta para pilotar uma motocicleta?", "opts": [{"id": "A", "txt": "Braços esticados e coluna totalmente curvada para frente."}, {"id": "B", "txt": "Coluna ereta, ombros relaxados, braços levemente flexionados e pés apoiados nas pedaleiras."}, {"id": "C", "txt": "Corpo inclinado para trás, com os braços elevados."}, {"id": "D", "txt": "Joelhos abertos e pés no chão durante todo o trajeto."}, {"id": "E", "txt": "Tronco apoiado sobre o tanque de combustível."}]}, {"q": "Qual é a melhor técnica para utilizar os freios de uma motocicleta?", "opts": [{"id": "A", "txt": "Usar apenas o freio dianteiro para parar mais rápido."}, {"id": "B", "txt": "Usar apenas o freio traseiro em qualquer situação."}, {"id": "C", "txt": "Acionar ambos os freios progressivamente, dosando a força conforme a necessidade."}, {"id": "D", "txt": "Pressionar os freios bruscamente para travar as rodas."}, {"id": "E", "txt": "Puxar o manete de embreagem antes de acionar os freios."}]}, {"q": "Em curvas, qual é a principal regra de ouro para a frenagem?", "opts": [{"id": "A", "txt": "Frear forte com a moto ainda inclinada."}, {"id": "B", "txt": "Acelerar bruscamente no meio da curva."}, {"id": "C", "txt": "Evitar frear forte dentro da curva, principalmente com o freio dianteiro."}, {"id": "D", "txt": "Pisar no freio traseiro e travar a roda."}, {"id": "E", "txt": "Desengatar a marcha para a moto ficar livre."}]}, {"q": "Qual é a atitude correta ao passar por uma via coberta de óleo ou areia?", "opts": [{"id": "A", "txt": "Acelerar para passar rapidamente pelo obstáculo."}, {"id": "B", "txt": "Frear bruscamente em cima do óleo."}, {"id": "C", "txt": "Reduzir a velocidade, evitar inclinar a moto e passar em linha reta com suavidade."}, {"id": "D", "txt": "Inclinar a moto bastante para contornar o trecho escorregadio."}, {"id": "E", "txt": "Mudar de marcha de forma agressiva."}]}, {"q": "A ultrapassagem deve ser feita:", "opts": [{"id": "A", "txt": "Pela direita, pois é o lado mais seguro."}, {"id": "B", "txt": "Pela esquerda, em trechos permitidos e com segurança, após sinalizar."}, {"id": "C", "txt": "Pelo acostamento, se a pista estiver congestionada."}, {"id": "D", "txt": "Em curvas e viadutos, se você estiver com pressa."}, {"id": "E", "txt": "Sem a necessidade de observar os retrovisores."}]}, {"q": "O \"corredor\" (espaço entre as filas de carros) no trânsito brasileiro:", "opts": [{"id": "A", "txt": "É proibido em todas as vias urbanas."}, {"id": "B", "txt": "É liberado em qualquer velocidade, a critério do motociclista."}, {"id": "C", "txt": "Exige atenção redobrada, pois aumenta o risco de acidentes com veículos mudando de faixa."}, {"id": "D", "txt": "Deve ser usado exclusivamente em rodovias."}, {"id": "E", "txt": "É permitido apenas para motocicletas acima de 500cc."}]}, {"q": "Qual a importância do uso do capacete certificado pelo INMETRO?", "opts": [{"id": "A", "txt": "Prevenir infrações de trânsito, sem grande função de segurança."}, {"id": "B", "txt": "Proteger a cabeça em casos de impacto, reduzindo os riscos de traumatismo craniano."}, {"id": "C", "txt": "Melhorar a aerodinâmica do piloto."}, {"id": "D", "txt": "Proteger o piloto contra a chuva e o vento."}, {"id": "E", "txt": "Evitar o cansaço visual."}]}, {"q": "O que fazer se um pneu furar enquanto estiver em movimento?", "opts": [{"id": "A", "txt": "Puxar o freio dianteiro com força para parar imediatamente."}, {"id": "B", "txt": "Pular da moto em movimento."}, {"id": "C", "txt": "Segurar o guidão firmemente, evitar frear bruscamente e reduzir a velocidade aos poucos."}, {"id": "D", "txt": "Desligar o motor e mudar rapidamente as marchas."}, {"id": "E", "txt": "Inclinar a moto para o lado do pneu furado."}]}, {"q": "Sobre o capacete é INCORRETO afirmar:", "opts": [{"id": "A", "txt": "deve ser trocado sempre que o piloto sofrer queda e o capacete for atingido."}, {"id": "B", "txt": "quando não há viseira no capacete, o correto é usar óculos de proteção."}, {"id": "C", "txt": "os tipos mais fechados protegem toda a cabeça, inclusive a parte inferior da face."}, {"id": "D", "txt": "em pequenos percursos não é necessário afivelar o capacete, devido a baixa velocidade da motocicleta."}, {"id": "E", "txt": "deve-se optar por cores claras para que sejam vistos com mais facilidade."}]}, {"q": "O capacete deve possuir obrigatoriamente:", "opts": [{"id": "A", "txt": "Viseira colorida ou fumê."}, {"id": "B", "txt": "Adesivos refletivos e selo do INMETRO."}, {"id": "C", "txt": "Sistema de som integrado."}, {"id": "D", "txt": "Protetor de queixo móvel."}, {"id": "E", "txt": "Entrada de ar na parte superior."}]}, {"q": "Em uma rodovia, qual faixa de rolamento o motociclista deve preferencialmente utilizar se estiver pilotando em velocidade de cruzeiro?", "opts": [{"id": "A", "txt": "A faixa da direita, para dar passagem aos veículos mais rápidos na esquerda."}, {"id": "B", "txt": "A faixa da esquerda, pois é considerada a mais segura."}, {"id": "C", "txt": "O acostamento."}, {"id": "D", "txt": "Alternando entre as faixas a cada 5 minutos."}, {"id": "E", "txt": "Exatamente na linha divisória das faixas."}]}, {"q": "O que são os itens de segurança passiva em uma motocicleta?", "opts": [{"id": "A", "txt": "Freios ABS e controle de tração."}, {"id": "B", "txt": "Itens como capacete, jaqueta com proteção, botas e luvas que reduzem danos em caso de acidente."}, {"id": "C", "txt": "O farol dianteiro e as setas."}, {"id": "D", "txt": "A buzina e o retrovisor."}, {"id": "E", "txt": "O motor e o chassi."}]}, {"q": "O que caracteriza a fadiga do condutor e por que ela é um risco?", "opts": [{"id": "A", "txt": "O desgaste físico e mental; diminui a atenção e o tempo de reação do piloto."}, {"id": "B", "txt": "A perda de pressão dos pneus."}, {"id": "C", "txt": "O superaquecimento do motor da moto."}, {"id": "D", "txt": "O barulho excessivo do escapamento."}, {"id": "E", "txt": "O ressecamento da corrente de transmissão."}]}, {"q": "Qual é a regra para a visibilidade do motociclista nos espelhos retrovisores?", "opts": [{"id": "A", "txt": "Os espelhos devem mostrar apenas o piloto."}, {"id": "B", "txt": "O piloto deve ajustar os espelhos de forma a enxergar uma parte dos próprios braços e a via atrás."}, {"id": "C", "txt": "Os espelhos devem ser ajustados para olhar para cima."}, {"id": "D", "txt": "Devem mostrar exclusivamente os veículos na pista ao lado."}, {"id": "E", "txt": "O ressecamento da corrente de transmissão."}]}, {"q": "Qual é a atitude correta ao se deparar com um pedestre atravessando a rua na faixa de segurança?", "opts": [{"id": "A", "txt": "Buzinar para que o pedestre apresse a travessia."}, {"id": "B", "txt": "Reduzir a velocidade e parar o veículo para dar a preferência ao pedestre."}, {"id": "C", "txt": "Desviar do pedestre sem reduzir a velocidade."}, {"id": "D", "txt": "Parar apenas se o pedestre estiver correndo."}, {"id": "E", "txt": "Ultrapassar o veículo que já parou para o pedestre."}]}, {"q": "A ingestão de álcool antes de pilotar é perigosa porque:", "opts": [{"id": "A", "txt": "Melhora os reflexos do piloto."}, {"id": "B", "txt": "Prejudica a coordenação motora, diminui os reflexos e altera a percepção de risco."}, {"id": "C", "txt": "Não afeta o equilíbrio em motos de baixa cilindrada."}, {"id": "D", "txt": "Aumenta a visão periférica."}, {"id": "E", "txt": "Ajuda a relaxar os músculos e diminuir o estresse."}]}, {"q": "O que fazer quando for ultrapassado por um veículo pesado ou ônibus?", "opts": [{"id": "A", "txt": "Acelerar para manter a mesma velocidade do veículo."}, {"id": "B", "txt": "Segurar firmemente o guidão e estar preparado para rajadas de ar."}, {"id": "C", "txt": "Ultrapassar o veículo pesado logo em seguida."}, {"id": "D", "txt": "Desviar para o acostamento imediatamente."}, {"id": "E", "txt": "Ligar o pisca-alerta."}]}, {"q": "Como o uso da buzina deve ser feito com segurança?", "opts": [{"id": "A", "txt": "Utilizar sempre que ficar preso em um engarrafamento."}, {"id": "B", "txt": "Usar para alertar os outros usuários da via sobre perigos iminentes, de forma breve."}, {"id": "C", "txt": "Usar para cumprimentar conhecidos na rua."}, {"id": "D", "txt": "Usar para apressar pedestres que caminham devagar."}, {"id": "E", "txt": "Utilizar continuamente para abrir caminho."}]}, {"q": "Manter a manutenção da motocicleta em dia (freios, pneus, luzes) contribui para:", "opts": [{"id": "A", "txt": "Apenas melhorar a estética da moto."}, {"id": "B", "txt": "O aumento do consumo de combustível."}, {"id": "C", "txt": "A segurança, pois evita falhas mecânicas que podem causar acidentes."}, {"id": "D", "txt": "Diminuir o valor do seguro da motocicleta."}, {"id": "E", "txt": "Aumentar a velocidade máxima do veículo."}]}, {"q": "O que caracteriza o sistema de freios ABS?", "opts": [{"id": "A", "txt": "Ele trava as rodas em uma frenagem de emergência."}, {"id": "B", "txt": "Evita o travamento das rodas durante uma frenagem brusca, mantendo o controle direcional."}, {"id": "C", "txt": "Aumenta automaticamente a velocidade da moto."}, {"id": "D", "txt": "Funciona apenas na roda traseira."}, {"id": "E", "txt": "É um item puramente estético."}]}, {"q": "Ao cruzar com animais na pista, o motociclista deve:", "opts": [{"id": "A", "txt": "Buzinar alto e manter a velocidade."}, {"id": "B", "txt": "Reduzir a velocidade, evitar buzinar para não assustar o animal e desviar com segurança."}, {"id": "C", "txt": "Tentar atropelar o animal se for de pequeno porte."}, {"id": "D", "txt": "Acelerar para passar antes do animal."}, {"id": "E", "txt": "Fechar os olhos e seguir em frente."}]}];
+        const bancoCarro = [{"q": "O ofuscamento pode ser ocasionado por:", "opts": [{"id": "A", "txt": "incidência direta de raios solares."}, {"id": "B", "txt": "reflexos de luz solar."}, {"id": "C", "txt": "luz alta em sentido contrário."}, {"id": "D", "txt": "luz alta no retrovisor."}, {"id": "E", "txt": "todas as alternativas estão corretas."}]}, {"q": "No trânsito, o condutor deve:", "opts": [{"id": "A", "txt": "observar e respeitar as normas de circulação estabelecidas pelo Código de Trânsito Brasileiro."}, {"id": "B", "txt": "obedecer apenas á sinalização das placas e aos semáforos."}, {"id": "C", "txt": "dar preferência apenas aos idosos e crianças."}, {"id": "D", "txt": "sempre dar preferência aos demais usuários da via."}, {"id": "E", "txt": "pedir autorização para efetuar alguma manobra irregular."}]}, {"q": "Ao perceber que o pedal do freio está baixo, você deve:", "opts": [{"id": "A", "txt": "procurar imediatamente uma oficina mecânica."}, {"id": "B", "txt": "resolver o problema após cumprir com os deveres dos dias."}, {"id": "C", "txt": "manter - se confiante e seguir seu trajeto normal."}, {"id": "D", "txt": "deixar para verificar quando for fazer uma revisão geral."}, {"id": "E", "txt": "continuar circulando, mas com velocidade reduzida."}]}, {"q": "A direção Defensiva tem 5 elementos. Quais são eles?", "opts": [{"id": "A", "txt": "Atenção, Conversão, Previsão, Decisão e Habilidade"}, {"id": "B", "txt": "Atenção, Conhecimento, Preferencial, Decisão e Habilidade"}, {"id": "C", "txt": "Conhecimento, Atenção, Previsão, Decisão e Habilidade"}, {"id": "D", "txt": "Conhecimento, Atenção, Prudência, Decisão e Habilidade"}, {"id": "E", "txt": "Conhecimento, Atenção, Segurança, Habilidade e Decisão"}]}, {"q": "Para passar vias urbanas para rodoviárias, você:", "opts": [{"id": "A", "txt": "faz passagem confiante no seu veículo e na sua habilidade."}, {"id": "B", "txt": "atravessa essas áreas, buzinando."}, {"id": "C", "txt": "acelera para passar rapidamente de uma via para outra."}, {"id": "D", "txt": "acredita que, trafegando bem devagar, nada lhe ocorrerá."}, {"id": "E", "txt": "obedece a sinalização e redobra a atenção."}]}, {"q": "As alterações no estado físico e mental do condutor:", "opts": [{"id": "A", "txt": "não interferem no ato de dirigir, pois tem pleno controle sobre estas alterações."}, {"id": "B", "txt": "são benéficas e podem até melhorar a capacidade de dirigir."}, {"id": "C", "txt": "afetam diretamente a capacidade de dirigir com segurança."}, {"id": "D", "txt": "ajudam a reagir adequadamente em situações de perigo."}, {"id": "E", "txt": "podem ser facilmente controladas, dispensando o uso da direção defensiva."}]}, {"q": "O condutor que está sob o efeito do álcool tem:", "opts": [{"id": "A", "txt": "a capacidade diminuída para tomada de decisão."}, {"id": "B", "txt": "aumento da perícia."}, {"id": "C", "txt": "a capacidade de dirigir inalterada."}, {"id": "D", "txt": "a concentração inalterada."}, {"id": "E", "txt": "o sentido de audição aguçado."}]}, {"q": "O cinto de segurança é projetado para:", "opts": [{"id": "A", "txt": "proteger os ocupantes em paradas súbitas e colisões."}, {"id": "B", "txt": "diminuir a velocidade de seu veículo."}, {"id": "C", "txt": "ser usado por duas pessoas ao mesmo tempo."}, {"id": "D", "txt": "ser usado apenas em longos percursos."}, {"id": "E", "txt": "ser usado apenas nos bancos dianteiros."}]}, {"q": "Para sinalizar um veículo imobilizado na pista ou no acostamento, deve - se colocar o triângulo de segurança:", "opts": [{"id": "A", "txt": "sobre o veículo, para que seja visto melhor."}, {"id": "B", "txt": "a um metro de distância do veículo."}, {"id": "C", "txt": "a uma distância segura (cerca de 30 m) para que os demais condutores sejam alertados a tempo."}, {"id": "D", "txt": "dentro do veículo, na parte traseira."}, {"id": "E", "txt": "ao lado do veículo."}]}, {"q": "Numa via rápida, dirigindo a 60 km/h, o motor do seu veículo começa a falhar. Nessa situação você:", "opts": [{"id": "A", "txt": "acelera mais para que o veículo ganhe mais velocidade."}, {"id": "B", "txt": "continua o trajeto dando sinal de pisca - alerta."}, {"id": "C", "txt": "continua normalmente o trajeto."}, {"id": "D", "txt": "para imediatamente, sinalizando."}, {"id": "E", "txt": "reduz a velocidade, sinaliza, para no acostamento e liga o pisca - alerta até providenciar ajuda."}]}, {"q": "No pilar do relacionamento e cortesia no trânsito, como o condutor deve agir ao se aproximar de um cruzamento urbano não sinalizado onde há pedestres aguardando para atravessar?", "opts": [{"id": "A", "txt": "Buzinar para alertar os pedestres sobre sua aproximação e manter a velocidade para não atrapalhar o fluxo de veículos."}, {"id": "B", "txt": "Reduza a velocidade de forma gradual, dar a preferência aos pedestres e realizar a travessia com total segurança."}, {"id": "C", "txt": "Parar o veículo bruscamente na faixa e acenar para que os pedestres corram para o outro lado da via."}, {"id": "D", "txt": "Acelerar para passar rapidamente, diminuindo o tempo de exposição do veículo na área de conflito do cruzamento."}, {"id": "E", "txt": "Todas as alternativas estão corretas."}]}, {"q": "Circular com excesso de velocidade e avançar o sinal vermelho do semáforo é um ato que caracteriza:", "opts": [{"id": "A", "txt": "distração."}, {"id": "B", "txt": "imperícia."}, {"id": "C", "txt": "falta de educação."}, {"id": "D", "txt": "imprudência."}, {"id": "E", "txt": "segurança."}]}, {"q": "O freio de estacionamento mantém o veículo parado:", "opts": [{"id": "A", "txt": "nas retas, apenas."}, {"id": "B", "txt": "somente em piso inclinado."}, {"id": "C", "txt": "em piso horizontal ou inclinado."}, {"id": "D", "txt": "somente nos aclives."}, {"id": "E", "txt": "somente nos declives."}]}, {"q": "Em uma rodovia, cuja velocidade máxima permitida é de 80 km/h, ocorreu uma colisão de um carro com uma motocicleta. O  acidente aconteceu às 9:30 horas e a pista estava seca. Para essa situação, recomenda - se que a distância do acidente  para o início da sinalização deve ser de:", "opts": [{"id": "A", "txt": "80 passos longos de um adulto."}, {"id": "B", "txt": "20 passos longos de um adulto."}, {"id": "C", "txt": "10 metros para poder cuidar do triângulo."}, {"id": "D", "txt": "80 passos médios de um adulto."}, {"id": "E", "txt": "100 metros."}]}, {"q": "A direção defensiva tem 5 elementos e a Habilidade é um desses elementos. Assinale a alternativa que representa o conceito desse elemento:", "opts": [{"id": "A", "txt": "Manusear os controles e saber efetuar com sucesso todas as manobras necessárias em cada situação de risco."}, {"id": "B", "txt": "Verificar as condições do veículo antes de iniciar a condução."}, {"id": "C", "txt": "Dominar a legislação de trânsito e respeitá-las."}, {"id": "D", "txt": "O motorista deve estar atento e sempre alerta às condições de tráfego."}, {"id": "E", "txt": "Nenhuma das alternativas estão corretas."}]}, {"q": "A preferência no trânsito é do pedestre ou do condutor?", "opts": [{"id": "A", "txt": "do pedestre, pois ele é mais frágil em relação ao veículo."}, {"id": "B", "txt": "dos pedestres, somente se forem crianças ou idosos."}, {"id": "C", "txt": "como pessoas e cidadãos, ambos têm direitos iguais."}, {"id": "D", "txt": "do condutor, pois ele está no comando do veículo."}, {"id": "E", "txt": "do condutor, pois é o pedestre que deve se cuidar."}]}, {"q": "Em relação aos efeitos do álcool no organismo do condutor, é INCORRETO afirmar que:", "opts": [{"id": "A", "txt": "a maioria das pessoas alcoolizadas acredita que está com reflexos e reações normais."}, {"id": "B", "txt": "melhora a coordenação motora."}, {"id": "C", "txt": "o raciocínio e as reações ficam lentos."}, {"id": "D", "txt": "há falta de concentração."}, {"id": "E", "txt": "há diminuição ou perda de espírito crítico."}]}, {"q": "Ao desembarcar de um ônibus, o passageiro atravessa a via à frente, fora da faixa de segurança. Você:", "opts": [{"id": "A", "txt": "acelera para aproveitar o semáforo, que está verde."}, {"id": "B", "txt": "freia o carro bruscamente, e buzina para alertar o pedetre."}, {"id": "C", "txt": "ignora o pedestre e segue em frente."}, {"id": "D", "txt": "redobra a atenção e dá preferência ao pedestre."}, {"id": "E", "txt": "buzina e faz prevalecer sua prioridade."}]}, {"q": "Ao encontrar pedestres atravessando a pista sobre a faixa de segurança, em um cruzamento sem semáforo, você:", "opts": [{"id": "A", "txt": "buzina para advertir os pedestres e passa."}, {"id": "B", "txt": "passa sem se importar com os pedestres, pois não há semáforo para eles no cruzamento."}, {"id": "C", "txt": "sinaliza, para e permite a travessia dos pedestres."}, {"id": "D", "txt": "freia bruscamente e permite a travessia dos pedestres."}, {"id": "E", "txt": "para, liga o pisca - alerta, permitindo a travessia dos pedestres."}]}, {"q": "Todo condutor deve praticar Direção Defensiva constantemente. O motorista defensivo deve saber que as condições adversas são:", "opts": [{"id": "A", "txt": "os fatores ou combinações de fatores que contribuem para aumentar as situações de risco no trânsito, comprometendo a segurança."}, {"id": "B", "txt": "os itens dos veículos que interferem diretamente na segurança como os freios, a direção e a suspensão."}, {"id": "C", "txt": "os procedimentos de segurança que o motorista defensivo deve adotar para contribuir com o fluxo de veículos em uma via."}, {"id": "D", "txt": "as reciclagens que todo condutor deve fazer periodicamente para aumentar sua habilidade ao dirigir."}, {"id": "E", "txt": "nenhuma das alternativas está correta."}]}, {"q": "Parar seu veículo em um cruzamento não sinalizado porque está vindo uma moto á sua direita, significa que você respeita:", "opts": [{"id": "A", "txt": "os percursos bem planejados e sinalizados."}, {"id": "B", "txt": "a preferência das motos nos cruzamentos."}, {"id": "C", "txt": "o seu veículo."}, {"id": "D", "txt": "a sinalização das placas e o seu veículo."}, {"id": "E", "txt": "a segurança e as leis de trânsito."}]}, {"q": "O trânsito de veículos motorizados sobre passeio e calçadas é permitido para:", "opts": [{"id": "A", "txt": "fugir de congestionamento."}, {"id": "B", "txt": "apanhar passageiros."}, {"id": "C", "txt": "cortar caminho."}, {"id": "D", "txt": "acessar estacionamento e/ou imóveis."}, {"id": "E", "txt": "fazer manobras de retorno."}]}, {"q": "Dirigindo sob forte chuva, após passar por pontos de alagamento, o freio começa falhar. Nessa situação, você:", "opts": [{"id": "A", "txt": "fica tranquilo e reduz a velocidade até chegar ao seu destino."}, {"id": "B", "txt": "reduz a velocidade, testa o freio e, se necessário, sinaliza, para e procura por socorro."}, {"id": "C", "txt": "engrena a primeira marcha  para manter o motor acelerado."}, {"id": "D", "txt": "ignora o fato, pois os freios vão secar mais adiante."}, {"id": "E", "txt": "para e passa álcool nas lonas."}]}, {"q": "Dirigindo automóvel em uma rodovia, com ventos laterais fortes, você:", "opts": [{"id": "A", "txt": "fecha as janelas e continua com a mesma velociade."}, {"id": "B", "txt": "abre as janelas e continua com a mesma velocidade."}, {"id": "C", "txt": "reduz para uma velocidade compatível com a situação."}, {"id": "D", "txt": "mantém a velocidade normal."}, {"id": "E", "txt": "deve aumentar a velocidade."}]}, {"q": "Ao cruzar uma ferrovia em nível, sem cancela, você deve:", "opts": [{"id": "A", "txt": "reduzir a velocidade do veículo e atravessar a via férrea."}, {"id": "B", "txt": "parar o veículo, olhar para ambos os lados e efetuar o cruzamento com com segurança."}, {"id": "C", "txt": "buzinar antes de atravessar."}, {"id": "D", "txt": "acender os faróis do veículo."}, {"id": "E", "txt": "efetuar a travessia bem devagar."}]}, {"q": "A  condição geral do condutor afeta diretamente sua forma de dirigir. Por esse motivo, alguns estados físicos ou mentais devem ser evitados, como estar:", "opts": [{"id": "A", "txt": "disposto."}, {"id": "B", "txt": "calmo."}, {"id": "C", "txt": "sem sono."}, {"id": "D", "txt": "sóbrio."}, {"id": "E", "txt": "cansado e sob efeito de medicamentos."}]}, {"q": "O sinal do semáforo está verde para veículos, mas o pedestre ainda está atravessando a pista. Você:", "opts": [{"id": "A", "txt": "dá - lhe uma bronca."}, {"id": "B", "txt": "buzina para apressar o pedestre."}, {"id": "C", "txt": "desce do veículo e o auxilia a completar a travessia."}, {"id": "D", "txt": "pergunta se ele quer ajuda para para atravessar a rua."}, {"id": "E", "txt": "aguarda que ele termine a travessia."}]}, {"q": "A luz de freio do seu veículo está apresentando problemas. Nessa situação você:", "opts": [{"id": "A", "txt": "sai assim mesmo."}, {"id": "B", "txt": "procura imediatamente um autoeiétrico."}, {"id": "C", "txt": "deixa para resolver o problema durante o trajeto."}, {"id": "D", "txt": "sinaliza de outra forma."}, {"id": "E", "txt": "desconsidera o fato."}]}, {"q": "Ao encontrar pedestres caminhando por uma via que não tem calçada, nem acostamento. Você:", "opts": [{"id": "A", "txt": "buzina para os pedestres saírem da via."}, {"id": "B", "txt": "diminui a velocidade e tenta passar afastado dos pedestres."}, {"id": "C", "txt": "chama um agente de trânsito, pois eles não podem caminhar pela pista."}, {"id": "D", "txt": "oferece carona aos pedestres para tirá-los do perigo."}, {"id": "E", "txt": "continua normalmente, pois os pedestres estão errados."}]}, {"q": "Durante a condução de um veículo em uma rodovia em dia de chuva intensa, qual deve ser a distância correta de segurança em relação ao veículo da frente, de acordo com a metodologia CUIDAR?", "opts": [{"id": "A", "txt": "Manter a mesma distância de 2 segundo usada em dias de pista seca, pois o freio ABS compensa a aderência."}, {"id": "B", "txt": "Reduzir a distância para 1 segundo, mantendo o foco visual fixo nas luzes de freio do veículo da frente."}, {"id": "C", "txt": "Dobrar a distância de segurança para pelo menos 4 segundos, garantido tempo de reação e espaço para frenagem."}, {"id": "D", "txt": "Manter 3 segundos de distância e acionar o pisca-alerta para avisar os condutores que vem atrás."}, {"id": "E", "txt": "Nenhuma das alternativas estão corretas."}]}];
 
-        const questions = [
-            {
-                text: "Qual é a principal atitude defensiva ao conduzir veículos operacionais da CGB em vias urbanas e rodovias?",
-                options: [
-                    "Acelerar para cumprir prazos apertados sem verificar os retrovisores.",
-                    "Prever situações de risco, respeitar as leis de trânsito e manter distância de segurança.",
-                    "Ultrapassar sempre pela direita em trechos de declive.",
-                    "Desligar os faróis durante o dia para economizar sistema elétrico."
-                ],
-                correct: 1
-            },
-            {
-                text: "Em caso de pista molhada, aquaplanagem ou chuva forte nas bases operacionais, qual o procedimento correto?",
-                options: [
-                    "Manter a velocidade máxima permitida da via e pisar fundo no freio.",
-                    "Reduzir a velocidade, evitar freadas bruscas e aumentar a distância do veículo à frente.",
-                    "Utilizar o pisca-alerta ligado com o veículo em movimento na rodovia principal.",
-                    "Continuar na mesma velocidade caso os pneus estejam carecas."
-                ],
-                correct: 1
-            },
-            {
-                text: "O uso do cinto de segurança e verificação dos itens obrigatórios do veículo aplicam-se a:",
-                options: [
-                    "Apenas ao condutor e em viagens com mais de 50 quilómetros.",
-                    "Somente aos passageiros sentados no banco dianteiro.",
-                    "Todos os ocupantes do veículo, em qualquer deslocamento a serviço.",
-                    "Apenas quando houver fiscalização rodoviária na pista."
-                ],
-                correct: 2
-            },
-            {
-                text: "Como deve agir o condutor ao aproximar-se de áreas urbanas com grande circulação de pedestres ou equipes de campo em manutenção?",
-                options: [
-                    "Aumentar a velocidade para passar logo pelo local.",
-                    "Reduzir significativamente a velocidade e redobrar a atenção aos trabalhadores e sinalização de SST.",
-                    "Utilizar a buzina continuamente sem abrandar a marcha.",
-                    "Desviar pelo acostamento sem sinalizar."
-                ],
-                correct: 1
-            },
-            {
-                text: "Qual a conduta obrigatória antes de iniciar qualquer deslocamento com veículos da frota?",
-                options: [
-                    "Acelerar o motor imediatamente para aquecer.",
-                    "Realizar o checklist de inspeção visual (pneus, fluidos, iluminação e freios) e ajuste de espelhos.",
-                    "Conectar o telemóvel ao sistema de som sem olhar.",
-                    "Verificar apenas o nível de combustível."
-                ],
-                correct: 1
+        let activeBank = [];
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        function showScreen(screenId) {
+            ['home', 'identificacao', 'instrucoes', 'prova'].forEach(id => {
+                document.getElementById('screen-' + id).classList.add('hidden');
+            });
+            document.getElementById('screen-' + screenId).classList.remove('hidden');
+            window.scrollTo(0,0);
+        }
+
+        // === LÓGICA DO AUTOCOMPLETE ===
+        function filterColaboradores(val) {
+            const dropdown = document.getElementById('autocomplete-dropdown');
+            const clearBtn = document.getElementById('btn-clear-nome');
+            
+            if (val.length === 0) {
+                clearBtn.classList.add('hidden');
+            } else {
+                clearBtn.classList.remove('hidden');
             }
-        ];
 
-        const searchInput = document.getElementById('search-input');
-        const resultsContainer = document.getElementById('results-container');
+            if (selectedColaborador && val !== selectedColaborador.nome) {
+                clearColaboradorSelection();
+            }
 
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            if (query.length < 2) {
-                resultsContainer.classList.add('hidden');
+            if (val.length < 3) {
+                dropdown.classList.add('hidden');
                 return;
             }
 
-            const filtered = colaboradoresData.filter(c => 
-                c.nome.toLowerCase().includes(query) || 
-                c.matricula.toLowerCase().includes(query) || 
-                c.base.toLowerCase().includes(query)
-            );
+            const searchVal = val.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            const matches = dbColaboradores.filter(c => {
+                const nomeNorm = c.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                return nomeNorm.includes(searchVal);
+            }).slice(0, 10); 
 
-            if (filtered.length > 0) {
-                resultsContainer.innerHTML = filtered.map(c => `
-                    <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3 hover:bg-slate-100 cursor-pointer text-sm">
-                        <p class="font-bold text-slate-800">${c.nome}</p>
-                        <p class="text-xs text-slate-500">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
-                    </div>
-                `).join('');
-                resultsContainer.classList.remove('hidden');
+            dropdown.innerHTML = '';
+            
+            if (matches.length > 0) {
+                matches.forEach(c => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-700 border-b border-gray-100 dark:border-gray-700 transition-colors";
+                    btn.innerHTML = `
+                        <p class="font-semibold text-brandText text-sm">${c.nome}</p>
+                        <p class="text-xs text-gray-500">Mat: ${c.matricula} • ${c.funcao} •${c.base}</p>
+                    `;
+                    btn.onclick = () => selectColaborador(c);
+                    dropdown.appendChild(btn);
+                });
+                dropdown.classList.remove('hidden');
             } else {
-                resultsContainer.innerHTML = '<div class="p-3 text-xs text-slate-500">Nenhum colaborador encontrado.</div>';
-                resultsContainer.classList.remove('hidden');
+                dropdown.innerHTML = '<div class="px-4 py-3 text-sm text-gray-500">Nenhum colaborador encontrado.</div>';
+                dropdown.classList.remove('hidden');
+            }
+        }
+
+        function selectColaborador(c) {
+            selectedColaborador = c;
+            const input = document.getElementById('input-nome');
+            input.value = c.nome;
+            document.getElementById('autocomplete-dropdown').classList.add('hidden');
+            
+            document.getElementById('lbl-matricula-form').innerText = c.matricula;
+            document.getElementById('lbl-base-form').innerText = c.base;
+            document.getElementById('lbl-funcao-form').innerText = c.funcao;
+            
+            document.getElementById('dados-db-container').classList.remove('hidden');
+        }
+
+        function clearColaboradorSelection() {
+            selectedColaborador = null;
+            document.getElementById('dados-db-container').classList.add('hidden');
+        }
+
+        function clearNome() {
+            document.getElementById('input-nome').value = '';
+            document.getElementById('input-nome').focus();
+            filterColaboradores('');
+            clearColaboradorSelection();
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('autocomplete-dropdown');
+            const input = document.getElementById('input-nome');
+            if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
             }
         });
 
-        function selectCollab(collab) {
-            selectedCollabData = collab;
-            searchInput.value = '';
-            resultsContainer.classList.add('hidden');
+        // === FIM AUTOCOMPLETE ===
+
+        function submitForm() {
+            // Em ambiente de teste permite preencher manualmente se quiser testar rápido
+            const inputName = document.getElementById('input-nome').value;
             
-            document.getElementById('collab-name-display').textContent = collab.nome;
-            document.getElementById('collab-info-display').textContent = `Matrícula: ${collab.matricula} • ${collab.funcao} (${collab.base})`;
+            if(!selectedColaborador && inputName.length > 3) {
+                 // Fallback para teste manual se não achar na lista
+                 selectedColaborador = {
+                     nome: inputName.toUpperCase(),
+                     matricula: "00000",
+                     base: "NÃO IDENTIFICADA",
+                     funcao: "COLABORADOR"
+                 };
+            } else if (!selectedColaborador) {
+                alert("Por favor, digite e selecione seu nome na lista.");
+                return;
+            }
+
+            const gerencia = document.getElementById('select-gerencia').value;
+            const veiculo = document.getElementById('select-veiculo').value;
+
+            if(!gerencia || !veiculo) {
+                alert("Por favor, selecione a Gerência e o Veículo de Avaliação para continuar.");
+                return;
+            }
+
+            document.getElementById('lbl-nome').innerText = selectedColaborador.nome;
+            document.getElementById('lbl-mat-final').innerText = selectedColaborador.matricula;
+            document.getElementById('lbl-base-final').innerText = selectedColaborador.base;
+            document.getElementById('lbl-func-final').innerText = selectedColaborador.funcao;
             
-            document.getElementById('selected-collab').classList.remove('hidden');
-            document.getElementById('btn-start').disabled = false;
+            document.getElementById('lbl-gerencia').innerText = gerencia;
+            document.getElementById('lbl-veic').innerText = veiculo;
+            currentVehicle = veiculo;
+            
+            document.getElementById('form-section').classList.add('hidden');
+            document.getElementById('confirm-section').classList.remove('hidden');
         }
 
-        function resetCollab() {
-            selectedCollabData = null;
-            document.getElementById('selected-collab').classList.add('hidden');
-            document.getElementById('btn-start').disabled = true;
+        function resetForm() {
+            document.getElementById('form-section').classList.remove('hidden');
+            document.getElementById('confirm-section').classList.add('hidden');
         }
 
-        function startQuiz() {
-            if (!selectedCollabData) return;
-            document.getElementById('step-collab').classList.add('hidden');
-            document.getElementById('step-quiz').classList.remove('hidden');
-            loadQuestion();
+        function goToInstructions() {
+            document.getElementById('nav-inst').classList.remove('hidden');
+            document.getElementById('inst-veiculo').innerText = "Avaliação: " + currentVehicle;
+            showScreen('instrucoes');
         }
 
-        function loadQuestion() {
-            const q = questions[currentQuestionIndex];
-            document.getElementById('quiz-progress').textContent = `Questão ${currentQuestionIndex + 1} de ${questions.length}`;
-            document.getElementById('question-text').textContent = q.text;
+        // === LÓGICA DA PROVA ===
+        function startProva() {
+            document.getElementById('nav-prova').classList.remove('hidden');
             
-            const optionsHtml = q.options.map((opt, index) => `
-                <label class="flex items-center p-3 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition">
-                    <input type="radio" name="option" value="${index}" onclick="enableNext()" class="mr-3 text-slate-900 focus:ring-slate-900">
-                    <span class="text-sm text-slate-700">${opt}</span>
-                </label>
-            `).join('');
+            activeBank = currentVehicle === 'Motocicleta' ? bancoMoto : bancoCarro;
+            currentQuestionIndex = 0;
+            selectedAnswers = {};
             
-            document.getElementById('options-container').innerHTML = optionsHtml;
-            document.getElementById('btn-next').disabled = true;
+            document.getElementById('prova-header-veic').innerText = currentVehicle.toUpperCase();
+            document.getElementById('q-total').innerText = activeBank.length;
+            
+            renderQuestion();
+            showScreen('prova');
         }
 
-        function enableNext() {
-            document.getElementById('btn-next').disabled = false;
+        function renderQuestion() {
+            const qData = activeBank[currentQuestionIndex];
+            document.getElementById('q-atual').innerText = currentQuestionIndex + 1;
+            document.getElementById('questao-texto').innerText = `0${currentQuestionIndex + 1}.${qData.q}`;
+            
+            const altContainer = document.getElementById('alternativas-container');
+            altContainer.innerHTML = '';
+            
+            qData.opts.forEach(opt => {
+                const isSelected = selectedAnswers[currentQuestionIndex] === opt.id;
+                
+                const baseClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 flex items-start gap-4 cursor-pointer";
+                const normalClass = "border-gray-200 hover:border-brandBlue/50 bg-white dark:bg-slate-800 dark:border-gray-700 text-gray-700 dark:text-gray-300";
+                const selectedClass = "border-brandBlue bg-blue-50 dark:bg-blue-900/20 text-brandNavy dark:text-white ring-1 ring-brandBlue";
+                
+                const btnClass = isSelected ? `${baseClass}${selectedClass}` : `${baseClass}${normalClass}`;
+                
+                const radioOuter = "flex-shrink-0 w-6 h-6 rounded-full border-2 mt-0.5 flex items-center justify-center";
+                const radioOuterClass = isSelected ? `${radioOuter} border-brandBlue` : `${radioOuter} border-gray-300 dark:border-gray-600`;
+                const radioInner = isSelected ? `<div class="w-3 h-3 rounded-full bg-brandBlue"></div>` : ``;
+
+                altContainer.innerHTML += `
+                    <div onclick="selectAlternative('${opt.id}')" class="${btnClass}">
+                        <div class="${radioOuterClass}">${radioInner}</div>
+                        <div class="flex-1">
+                            <span class="font-bold mr-2">${opt.id})</span>
+                            <span>${opt.txt}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('btn-prev').disabled = currentQuestionIndex === 0;
+            
+            const btnNext = document.getElementById('btn-next');
+            if (currentQuestionIndex === activeBank.length - 1) {
+                btnNext.innerHTML = 'Finalizar Prova <i class="fa-solid fa-check ml-2"></i>';
+                btnNext.classList.replace('bg-brandBlue', 'bg-green-600');
+                btnNext.classList.replace('hover:bg-blue-600', 'hover:bg-green-700');
+            } else {
+                btnNext.innerHTML = 'Próxima <i class="fa-solid fa-arrow-right ml-2"></i>';
+                btnNext.classList.replace('bg-green-600', 'bg-brandBlue');
+                btnNext.classList.replace('hover:bg-green-700', 'hover:bg-blue-600');
+            }
+        }
+
+        function selectAlternative(optId) {
+            selectedAnswers[currentQuestionIndex] = optId;
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
         }
 
         function nextQuestion() {
-            const selected = document.querySelector('input[name="option"]:checked');
-            if (!selected) return;
-
-            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
-                score++;
+            if (!selectedAnswers[currentQuestionIndex]) {
+                alert("Por favor, selecione uma alternativa antes de prosseguir.");
+                return;
             }
-
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                loadQuestion();
-            } else {
-                showResult();
-            }
-        }
-
-        function showResult() {
-            document.getElementById('step-quiz').classList.add('hidden');
-            document.getElementById('step-result').classList.remove('hidden');
             
-            const percentage = Math.round((score / questions.length) * 100);
-            document.getElementById('result-score').textContent = `${percentage}%`;
-            
-            if (percentage >= 70) {
-                document.getElementById('result-title').textContent = "Aprovado com Sucesso!";
-                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, você concluiu a avaliação da Escola do Bom Condutor.`;
+            if (currentQuestionIndex < activeBank.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
             } else {
-                document.getElementById('result-icon').textContent = "⚠️";
-                document.getElementById('result-title').textContent = "Necessita Revisão";
-                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, reveja os conceitos de direção defensiva.`;
+                if(confirm("Deseja realmente finalizar a prova? Esta ação não pode ser desfeita e registrará sua nota.")) {
+                    alert("Prova finalizada com sucesso! Suas respostas foram salvas.");
+                    showScreen('home');
+                }
             }
         }
     </script>
