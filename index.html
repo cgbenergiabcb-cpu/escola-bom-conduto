@@ -190,4 +190,156 @@
                 correct: 1
             },
             {
-                text: "Em caso
+                text: "Em caso de pista molhada, aquaplanagem ou chuva forte nas bases operacionais, qual o procedimento correto?",
+                options: [
+                    "Manter a velocidade máxima permitida da via e pisar fundo no freio.",
+                    "Reduzir a velocidade, evitar freadas bruscas e aumentar a distância do veículo à frente.",
+                    "Utilizar o pisca-alerta ligado com o veículo em movimento na rodovia principal.",
+                    "Continuar na mesma velocidade caso os pneus estejam carecas."
+                ],
+                correct: 1
+            },
+            {
+                text: "O uso do cinto de segurança e verificação dos itens obrigatórios do veículo aplicam-se a:",
+                options: [
+                    "Apenas ao condutor e em viagens com mais de 50 quilómetros.",
+                    "Somente aos passageiros sentados no banco dianteiro.",
+                    "Todos os ocupantes do veículo, em qualquer deslocamento a serviço.",
+                    "Apenas quando houver fiscalização rodoviária na pista."
+                ],
+                correct: 2
+            },
+            {
+                text: "Qual a conduta obrigatória antes de iniciar qualquer deslocamento com veículos da frota?",
+                options: [
+                    "Acelerar o motor imediatamente para aquecer.",
+                    "Realizar o checklist de inspeção visual (pneus, fluidos, iluminação e freios) e ajuste de espelhos.",
+                    "Conectar o telemóvel ao sistema de som sem olhar.",
+                    "Verificar apenas o nível de combustível."
+                ],
+                correct: 1
+            }
+        ];
+
+        function goToStep(step) {
+            ['inicio', 'identificar', 'instrucoes', 'prova', 'resultado'].forEach(s => {
+                document.getElementById('view-' + s).classList.add('hidden');
+                const nav = document.getElementById('nav-' + s);
+                if(nav) nav.className = 'text-slate-400 cursor-pointer';
+            });
+            document.getElementById('view-' + step).classList.remove('hidden');
+            const activeNav = document.getElementById('nav-' + step);
+            if(activeNav) activeNav.className = 'text-brand-500 font-bold cursor-pointer';
+            currentStep = step;
+            if(step === 'prova') loadQuestion();
+        }
+
+        const searchInput = document.getElementById('search-input');
+        const resultsContainer = document.getElementById('results-container');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            if (query.length < 2) {
+                resultsContainer.classList.add('hidden');
+                return;
+            }
+            const filtered = colaboradoresData.filter(c => 
+                c.nome.toLowerCase().includes(query) || 
+                c.matricula.toLowerCase().includes(query) || 
+                c.base.toLowerCase().includes(query)
+            );
+            if (filtered.length > 0) {
+                resultsContainer.innerHTML = filtered.map(c => `
+                    <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3 hover:bg-slate-800 cursor-pointer text-sm">
+                        <p class="font-bold text-white">${c.nome}</p>
+                        <p class="text-xs text-slate-400">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
+                    </div>
+                `).join('');
+                resultsContainer.classList.remove('hidden');
+            } else {
+                resultsContainer.innerHTML = '<div class="p-3 text-xs text-slate-400">Nenhum colaborador encontrado.</div>';
+                resultsContainer.classList.remove('hidden');
+            }
+        });
+
+        function selectCollab(collab) {
+            selectedCollabData = collab;
+            searchInput.value = '';
+            resultsContainer.classList.add('hidden');
+            document.getElementById('collab-name-display').textContent = collab.nome;
+            document.getElementById('collab-info-display').textContent = `Matrícula: ${collab.matricula} • ${collab.funcao} (${collab.base})`;
+            document.getElementById('selected-collab').classList.remove('hidden');
+            document.getElementById('btn-to-instrucoes').disabled = false;
+        }
+
+        function resetCollab() {
+            selectedCollabData = null;
+            document.getElementById('selected-collab').classList.add('hidden');
+            document.getElementById('btn-to-instrucoes').disabled = true;
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('quiz-progress').textContent = `Questão ${currentQuestionIndex + 1} de ${questions.length}`;
+            document.getElementById('question-text').textContent = q.text;
+            
+            const letters = ['A', 'B', 'C', 'D', 'E'];
+            const optionsHtml = q.options.map((opt, index) => `
+                <label class="flex items-center p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-brand-500 cursor-pointer transition">
+                    <input type="radio" name="option" value="${index}" onclick="enableNext()" class="mr-3 text-brand-500 focus:ring-brand-500">
+                    <span class="text-sm text-slate-200"><b>${letters[index]})</b> ${opt}</span>
+                </label>
+            `).join('');
+            
+            document.getElementById('options-container').innerHTML = optionsHtml;
+            document.getElementById('btn-next').disabled = true;
+        }
+
+        function enableNext() {
+            document.getElementById('btn-next').disabled = false;
+        }
+
+        function nextQuestion() {
+            const selected = document.querySelector('input[name="option"]:checked');
+            if (!selected) return;
+
+            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
+                score++;
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function showResult() {
+            goToStep('resultado');
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('result-score').textContent = `${percentage}%`;
+            if (percentage >= 70) {
+                document.getElementById('result-title').textContent = "Aprovado com Sucesso!";
+                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, você concluiu a avaliação da Escola do Bom Condutor com aproveitamento.`;
+            } else {
+                document.getElementById('result-title').textContent = "Necessita Revisão";
+                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, reveja os conceitos de direção defensiva.`;
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark');
+            const icon = document.getElementById('theme-icon');
+            icon.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+        }
+    </script>
+</body>
+</html>
