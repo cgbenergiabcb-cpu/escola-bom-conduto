@@ -13,7 +13,7 @@
                 <h1 class="text-lg font-bold tracking-wide">ESCOLA DO BOM CONDUTOR</h1>
                 <p class="text-xs text-yellow-400">CGB Energia - Segurança e Direção Defensiva</p>
             </div>
-            <span class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300">Sistema Oficial v2.2</span>
+            <span class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300">Sistema Oficial v2.3</span>
         </div>
     </header>
 
@@ -161,4 +161,96 @@
                 resultsContainer.innerHTML = filtered.map(c => `
                     <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3 hover:bg-slate-100 cursor-pointer text-sm">
                         <p class="font-bold text-slate-800">${c.nome}</p>
-                        <p class="text-xs text-slate-5
+                        <p class="text-xs text-slate-500">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
+                    </div>
+                `).join('');
+                resultsContainer.classList.remove('hidden');
+            } else {
+                resultsContainer.innerHTML = '<div class="p-3 text-xs text-slate-500">Nenhum colaborador encontrado.</div>';
+                resultsContainer.classList.remove('hidden');
+            }
+        });
+
+        function selectCollab(collab) {
+            selectedCollabData = collab;
+            searchInput.value = '';
+            resultsContainer.classList.add('hidden');
+            
+            document.getElementById('collab-name-display').textContent = collab.nome;
+            document.getElementById('collab-info-display').textContent = `Matrícula: ${collab.matricula} • ${collab.funcao} (${collab.base})`;
+            
+            document.getElementById('selected-collab').classList.remove('hidden');
+            document.getElementById('btn-start').disabled = false;
+        }
+
+        function resetCollab() {
+            selectedCollabData = null;
+            document.getElementById('selected-collab').classList.add('hidden');
+            document.getElementById('btn-start').disabled = true;
+        }
+
+        function startQuiz() {
+            if (!selectedCollabData) return;
+            document.getElementById('step-collab').classList.add('hidden');
+            document.getElementById('step-quiz').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('quiz-progress').textContent = `Questão ${currentQuestionIndex + 1} de ${questions.length}`;
+            document.getElementById('question-text').textContent = q.text;
+            
+            const optionsHtml = q.options.map((opt, index) => {
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                return `
+                    <label class="flex items-center p-3 border border-slate-200 rounded-lg hover:bg-slate-50 cursor-pointer transition">
+                        <input type="radio" name="option" value="${index}" onclick="enableNext()" class="mr-3 text-slate-900 focus:ring-slate-900">
+                        <span class="text-sm text-slate-700"><b>${letters[index]})</b> ${opt}</span>
+                    </label>
+                `;
+            }).join('');
+            
+            document.getElementById('options-container').innerHTML = optionsHtml;
+            document.getElementById('btn-next').disabled = true;
+        }
+
+        function enableNext() {
+            document.getElementById('btn-next').disabled = false;
+        }
+
+        function nextQuestion() {
+            const selected = document.querySelector('input[name="option"]:checked');
+            if (!selected) return;
+
+            if (parseInt(selected.value) === questions[currentQuestionIndex].correct) {
+                score++;
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('step-quiz').classList.add('hidden');
+            document.getElementById('step-result').classList.remove('hidden');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('result-score').textContent = `${percentage}%`;
+            
+            if (percentage >= 70) {
+                document.getElementById('result-title').textContent = "Aprovado com Sucesso!";
+                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, você concluiu a avaliação da Escola do Bom Condutor.`;
+            } else {
+                document.getElementById('result-icon').textContent = "⚠️";
+                document.getElementById('result-title').textContent = "Necessita Revisão";
+                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, reveja os conceitos de direção defensiva.`;
+            }
+        }
+    </script>
+</body>
+</html>
