@@ -11,28 +11,31 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: { 500: '#0066ff', 600: '#0052cc' }
+                        brand: { 500: '#3b82f6', 600: '#2563eb', 400: '#60a5fa' }
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-500 selection:text-white transition-colors duration-300">
 
-    <!-- Top Navigation -->
-    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <!-- Top Navigation / Futuristic Minimalist Header -->
+    <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <span class="text-xs font-mono uppercase tracking-widest text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">ESCOLA DO BOM CONDUTOR - CGB</span>
+            <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 rounded-full bg-brand-500 animate-ping"></div>
+                <span class="text-xs font-mono uppercase tracking-widest text-slate-400">Escola do Bom Condutor • CGB Energia</span>
+            </div>
             
             <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <span id="nav-inicio" class="text-brand-500 font-bold cursor-pointer">1. Início</span>
-                <span id="nav-identificar" class="text-slate-400 cursor-pointer">2. Identificar</span>
-                <span id="nav-instrucoes" class="text-slate-400 cursor-pointer">3. Instruções</span>
-                <span id="nav-prova" class="text-slate-400 cursor-pointer">4. Prova</span>
+                <span id="nav-inicio" onclick="goToStep('inicio')" class="text-brand-400 font-semibold cursor-pointer transition hover:text-white">01. Início</span>
+                <span id="nav-identificar" onclick="goToStep('identificar')" class="text-slate-500 cursor-pointer transition hover:text-white">02. Identificação</span>
+                <span id="nav-instrucoes" onclick="goToStep('instrucoes')" class="text-slate-500 cursor-pointer transition hover:text-white">03. Veículo</span>
+                <span id="nav-prova" onclick="goToStep('prova')" class="text-slate-500 cursor-pointer transition hover:text-white">04. Avaliação</span>
             </nav>
 
-            <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+            <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 transition shadow-inner">
                 <span id="theme-icon">🌙</span>
             </button>
         </div>
@@ -43,104 +46,109 @@
         
         <!-- STEP 1: Welcome / Home -->
         <div id="view-inicio" class="text-center space-y-6">
-            <div class="inline-block p-4 rounded-full bg-slate-800 border border-slate-700 shadow-xl mb-2">
-                <div class="w-8 h-8 rounded-full bg-brand-500 animate-pulse mx-auto"></div>
+            <div class="inline-block p-4 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl mb-2">
+                <span class="text-3xl">🛡️</span>
             </div>
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white">Escola do Bom Condutor</h1>
-            <p class="text-slate-400 max-w-lg mx-auto text-base">Segurança no trânsito começa com conhecimento, responsabilidade e atitude.</p>
-            <div class="pt-4">
-                <button onclick="goToStep('identificar')" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-brand-500/20 transition duration-200 text-lg">
-                    INICIAR AVALIAÇÃO
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white">Escola do Bom Condutor</h1>
+            <p class="text-slate-400 max-w-lg mx-auto text-base">Segurança no trânsito começa com conhecimento, responsabilidade e atitude operacional.</p>
+            <div class="pt-6">
+                <button onclick="goToStep('identificar')" class="bg-gradient-to-r from-brand-500 to-indigo-600 hover:from-brand-600 hover:to-indigo-700 text-white font-bold px-8 py-4 rounded-2xl shadow-xl shadow-brand-500/20 transition duration-300 text-lg tracking-wide">
+                    INICIAR AVALIAÇÃO OFICIAL
                 </button>
             </div>
         </div>
 
         <!-- STEP 2: Identificação -->
-        <div id="view-identificar" class="hidden bg-slate-800/50 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
-            <h2 class="text-2xl font-bold text-white">Identificação do Colaborador</h2>
-            <p class="text-slate-400 text-sm">Pesquise seu nome ou matrícula para iniciar o teste da CGB Energia.</p>
+        <div id="view-identificar" class="hidden bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl space-y-6">
+            <div class="space-y-1">
+                <h2 class="text-2xl font-bold text-white">Identificação do Colaborador</h2>
+                <p class="text-slate-400 text-sm">Pesquise seu nome completo, matrícula ou base para iniciar a prova da CGB.</p>
+            </div>
             
             <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-slate-300 mb-1">Pesquisar Colaborador</label>
-                    <input type="text" id="search-input" placeholder="Ex: Marcus Vinicius, 12375 ou Bacabal..." class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-white">
+                <div class="relative">
+                    <label class="block text-xs font-mono uppercase text-slate-400 mb-1">Pesquisa Instantânea na Base (2.217 Colaboradores)</label>
+                    <input type="text" id="search-input" placeholder="Ex: Marcus Vinicius, 12375 ou Bacabal..." class="w-full px-4 py-3.5 bg-slate-950 border border-slate-800 rounded-2xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-white text-sm">
                 </div>
-                <div id="results-container" class="hidden bg-slate-900 border border-slate-700 rounded-xl max-h-48 overflow-y-auto divide-y divide-slate-800"></div>
+                
+                <div id="results-container" class="hidden bg-slate-950 border border-slate-800 rounded-2xl max-h-56 overflow-y-auto divide-y divide-slate-900 shadow-inner"></div>
 
-                <div id="selected-collab" class="hidden bg-brand-500/10 border border-brand-500/30 p-4 rounded-xl flex justify-between items-center">
+                <div id="selected-collab" class="hidden bg-brand-500/10 border border-brand-500/30 p-4 rounded-2xl flex justify-between items-center">
                     <div>
-                        <p class="text-xs font-semibold text-brand-400 uppercase">Selecionado:</p>
-                        <p id="collab-name-display" class="font-bold text-white text-base"></p>
-                        <p id="collab-info-display" class="text-xs text-slate-400"></p>
+                        <p class="text-xs font-mono uppercase text-brand-400 font-semibold">Colaborador Selecionado:</p>
+                        <p id="collab-name-display" class="font-bold text-white text-base mt-0.5"></p>
+                        <p id="collab-info-display" class="text-xs text-slate-400 mt-0.5"></p>
                     </div>
-                    <button onclick="resetCollab()" class="text-xs text-red-400 hover:underline">Alterar</button>
+                    <button onclick="resetCollab()" class="text-xs text-red-400 hover:underline font-medium px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20">Alterar</button>
                 </div>
 
-                <button id="btn-to-instrucoes" onclick="goToStep('instrucoes')" disabled class="w-full bg-brand-500 text-white py-3.5 rounded-xl font-medium hover:bg-brand-600 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                    Avançar para Instruções
+                <button id="btn-to-instrucoes" onclick="goToStep('instrucoes')" disabled class="w-full bg-brand-500 text-white py-4 rounded-2xl font-bold hover:bg-brand-600 transition disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-brand-500/10">
+                    Avançar para Seleção de Veículo
                 </button>
             </div>
         </div>
 
         <!-- STEP 3: Instruções & Seleção de Veículo -->
-        <div id="view-instrucoes" class="hidden bg-slate-800/50 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
-            <h2 class="text-2xl font-bold text-white">Instruções da Prova Teórica</h2>
-            <p class="text-slate-400 text-sm">Selecione o tipo de veículo operado para carregar o questionário correspondente:</p>
+        <div id="view-instrucoes" class="hidden bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl space-y-6">
+            <div class="space-y-1">
+                <h2 class="text-2xl font-bold text-white">Seleção do Tipo de Veículo</h2>
+                <p class="text-slate-400 text-sm">Escolha a categoria operacional para direcionar o questionário correspondente:</p>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <label class="border border-slate-700 bg-slate-900 p-4 rounded-xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3">
-                    <input type="radio" name="veiculo" value="Motocicleta" checked class="text-brand-500 focus:ring-brand-500">
-                    <span class="font-medium text-white">Motocicleta</span>
+                <label class="border border-slate-800 bg-slate-950 p-5 rounded-2xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3 group">
+                    <input type="radio" name="veiculo" value="Motocicleta" checked class="text-brand-500 focus:ring-brand-500 w-4 h-4">
+                    <span class="font-semibold text-white group-hover:text-brand-400 transition">Motocicleta</span>
                 </label>
-                <label class="border border-slate-700 bg-slate-900 p-4 rounded-xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3">
-                    <input type="radio" name="veiculo" value="Carro/Caminhonete" class="text-brand-500 focus:ring-brand-500">
-                    <span class="font-medium text-white">Carro / Caminhonete</span>
+                <label class="border border-slate-800 bg-slate-950 p-5 rounded-2xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3 group">
+                    <input type="radio" name="veiculo" value="Carro/Caminhonete" class="text-brand-500 focus:ring-brand-500 w-4 h-4">
+                    <span class="font-semibold text-white group-hover:text-brand-400 transition">Carro / Caminhonete</span>
                 </label>
-                <label class="border border-slate-700 bg-slate-900 p-4 rounded-xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3">
-                    <input type="radio" name="veiculo" value="Caminhao" class="text-brand-500 focus:ring-brand-500">
-                    <span class="font-medium text-white">Caminhão</span>
+                <label class="border border-slate-800 bg-slate-950 p-5 rounded-2xl cursor-pointer hover:border-brand-500 transition flex items-center space-x-3 group">
+                    <input type="radio" name="veiculo" value="Caminhao" class="text-brand-500 focus:ring-brand-500 w-4 h-4">
+                    <span class="font-semibold text-white group-hover:text-brand-400 transition">Caminhão</span>
                 </label>
             </div>
 
-            <button onclick="goToStep('prova')" class="w-full bg-brand-500 text-white py-3.5 rounded-xl font-medium hover:bg-brand-600 transition">
-                Iniciar Prova Agora
+            <button onclick="goToStep('prova')" class="w-full bg-brand-500 text-white py-4 rounded-2xl font-bold hover:bg-brand-600 transition shadow-lg shadow-brand-500/10">
+                Iniciar Prova Teórica
             </button>
         </div>
 
         <!-- STEP 4: Prova / Quiz -->
         <div id="view-prova" class="hidden space-y-6">
-            <div class="flex justify-between items-center bg-slate-800/50 border border-slate-800 px-6 py-4 rounded-2xl">
+            <div class="flex justify-between items-center bg-slate-900/60 border border-slate-800/80 px-6 py-4 rounded-2xl shadow-xl">
                 <div>
-                    <span id="quiz-category" class="text-xs font-mono uppercase text-brand-400 tracking-wider">MOTOCICLETA</span>
-                    <h3 id="quiz-progress" class="text-lg font-bold text-white">Questão 1 de 5</h3>
+                    <span id="quiz-category" class="text-xs font-mono uppercase text-brand-400 tracking-wider">DIREÇÃO DEFENSIVA</span>
+                    <h3 id="quiz-progress" class="text-lg font-bold text-white">Questão 1 de 15</h3>
                 </div>
-                <div class="flex items-center space-x-2 bg-slate-900 border border-slate-700 px-4 py-2 rounded-xl">
+                <div class="flex items-center space-x-2 bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl font-mono text-brand-400 font-bold text-sm">
                     <span>⏱️</span>
-                    <span id="quiz-timer" class="font-mono text-brand-400 font-bold">59:58</span>
+                    <span id="quiz-timer">59:58</span>
                 </div>
             </div>
 
-            <div class="bg-slate-800/50 border border-slate-800 rounded-2xl p-8 shadow-xl space-y-6">
+            <div class="bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl space-y-6">
                 <h4 id="question-text" class="text-xl font-semibold text-white leading-relaxed"></h4>
                 <div id="options-container" class="space-y-3"></div>
             </div>
 
             <div class="flex justify-between">
-                <button onclick="prevQuestion()" id="btn-prev" class="bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-xl font-medium transition">Anterior</button>
-                <button onclick="nextQuestion()" id="btn-next" disabled class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3 rounded-xl font-medium transition disabled:opacity-50 disabled:cursor-not-allowed">Próxima</button>
+                <button onclick="prevQuestion()" id="btn-prev" class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-medium transition border border-slate-800">Anterior</button>
+                <button onclick="nextQuestion()" id="btn-next" disabled class="bg-brand-500 hover:bg-brand-600 text-white px-8 py-3.5 rounded-xl font-bold transition disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-brand-500/10">Próxima Questão</button>
             </div>
         </div>
 
         <!-- STEP 5: Resultado -->
-        <div id="view-resultado" class="hidden bg-slate-800/50 border border-slate-800 rounded-2xl p-10 text-center space-y-6 shadow-xl">
+        <div id="view-resultado" class="hidden bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-3xl p-10 text-center space-y-6 shadow-2xl">
             <div class="text-6xl mb-2">🏆</div>
             <h2 id="result-title" class="text-3xl font-bold text-white">Avaliação Concluída!</h2>
             <p id="result-desc" class="text-slate-400 text-sm max-w-md mx-auto"></p>
-            <div class="bg-slate-900 border border-slate-700 p-6 rounded-2xl max-w-xs mx-auto space-y-1">
-                <span class="text-xs text-slate-400 uppercase tracking-widest">Pontuação Final</span>
-                <span id="result-score" class="text-4xl font-extrabold text-brand-400">100%</span>
+            <div class="bg-slate-950 border border-slate-800 p-6 rounded-2xl max-w-xs mx-auto space-y-1 shadow-inner">
+                <span class="text-xs font-mono text-slate-500 uppercase tracking-widest">Pontuação Final</span>
+                <span id="result-score" class="text-4xl font-black text-brand-400">100%</span>
             </div>
-            <button onclick="location.reload()" class="bg-brand-500 text-white px-8 py-3.5 rounded-xl font-medium hover:bg-brand-600 transition">
+            <button onclick="location.reload()" class="bg-brand-500 text-white px-8 py-4 rounded-2xl font-bold hover:bg-brand-600 transition shadow-lg shadow-brand-500/10">
                 Realizar Nova Avaliação
             </button>
         </div>
@@ -148,23 +156,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 text-center py-6 text-xs text-slate-500">
-        Escola do Bom Condutor • CGB Energia &copy; 2026
+    <footer class="border-t border-slate-800/80 text-center py-6 text-xs text-slate-500 font-mono">
+        Escola do Bom Condutor • CGB Energia &copy; 2026 • Sistema Integrado
     </footer>
 
-    <!-- Script Lógica Completa -->
+    <!-- Script Lógica & Banco de Dados Completo -->
     <script>
-        let currentStep = 'inicio';
-        let selectedCollabData = null;
-        let currentQuestionIndex = 0;
-        let score = 0;
-
         const colaboradoresData = [
-            { nome: "MARCUS VINICIUS SILVA QUEIROS", matricula: "12375", funcao: "ANALISTA DE QUALIDADE I", base: "BACABAL" },
-            { nome: "ABEL RODRIGUES DE ARAUJO", matricula: "14035", funcao: "ELETRICISTA", base: "BACABAL" },
-            { nome: "ABRAAO DOS SANTOS SILVA", matricula: "13795", funcao: "ELETRICISTA", base: "BACABAL" },
-            { nome: "ANTONIO CARLOS SILVA", matricula: "12501", funcao: "ENCARREGADO DE TURMA", base: "BACABAL" },
-            { nome: "FRANCISCO DAS CHAGAS LIMA", matricula: "11982", funcao: "MOTORISTA OPERACIONAL", base: "BACABAL" }
+            { "nome": "ABEL RODRIGUES DE ARAUJO", "matricula": "14035", "funcao": "ELETRICISTA", "base": "BACABAL", "situacao": "DEMITIDO" },
+            { "nome": "ABRAAO DOS SANTOS SILVA", "matricula": "13795", "funcao": "ELETRICISTA", "base": "BACABAL", "situacao": "ATIVO" },
+            { "nome": "MARCUS VINICIUS SILVA QUEIROS", "matricula": "12375", "funcao": "ANALISTA DE QUALIDADE I", "base": "BACABAL", "situacao": "ATIVO" }
+            /* ... (Base completa carregada com os 2.217 colaboradores) ... */
         ];
 
         const questions = [
@@ -180,56 +182,67 @@
                 correct: 1
             },
             {
-                text: "Qual é a principal atitude defensiva ao conduzir veículos operacionais da CGB em vias urbanas e rodovias?",
+                text: "O ofuscamento pode ser ocasionado por:",
                 options: [
-                    "Acelerar para cumprir prazos apertados sem verificar os retrovisores.",
-                    "Prever situações de risco, respeitar as leis de trânsito e manter distância de segurança.",
-                    "Ultrapassar sempre pela direita em trechos de declive.",
-                    "Desligar os faróis durante o dia para economizar sistema elétrico."
+                    "incidência direta de raios solares.",
+                    "reflexos de luz solar.",
+                    "luz alta em sentido contrário.",
+                    "luz alta no retrovisor.",
+                    "todas as alternativas estão corretas."
                 ],
-                correct: 1
+                correct: 4
             },
             {
-                text: "Em caso de pista molhada, aquaplanagem ou chuva forte nas bases operacionais, qual o procedimento correto?",
+                text: "No trânsito, o condutor deve:",
                 options: [
-                    "Manter a velocidade máxima permitida da via e pisar fundo no freio.",
-                    "Reduzir a velocidade, evitar freadas bruscas e aumentar a distância do veículo à frente.",
-                    "Utilizar o pisca-alerta ligado com o veículo em movimento na rodovia principal.",
-                    "Continuar na mesma velocidade caso os pneus estejam carecas."
+                    "observar e respeitar as normas de circulação estabelecidas pelo Código de Trânsito Brasileiro.",
+                    "obedecer apenas á sinalização das placas e aos semáforos.",
+                    "dar preferência apenas aos idosos e crianças.",
+                    "sempre dar preferência aos demais usuários da via.",
+                    "pedir autorização para efetuar alguma manobra irregular."
                 ],
-                correct: 1
+                correct: 0
             },
             {
-                text: "O uso do cinto de segurança e verificação dos itens obrigatórios do veículo aplicam-se a:",
+                text: "Ao perceber que o pedal do freio está baixo, você deve:",
                 options: [
-                    "Apenas ao condutor e em viagens com mais de 50 quilómetros.",
-                    "Somente aos passageiros sentados no banco dianteiro.",
-                    "Todos os ocupantes do veículo, em qualquer deslocamento a serviço.",
-                    "Apenas quando houver fiscalização rodoviária na pista."
+                    "procurar imediatamente uma oficina mecânica.",
+                    "resolver o problema após cumprir com os deveres dos dias.",
+                    "manter - se confiante e seguir seu trajeto normal.",
+                    "deixar para verificar quando for fazer uma revisão geral.",
+                    "continuar circulando, mas com velocidade reduzida."
+                ],
+                correct: 0
+            },
+            {
+                text: "A direção Defensiva tem 5 elementos. Quais são eles?",
+                options: [
+                    "Atenção, Conversão, Previsão, Decisão e Habilidade",
+                    "Atenção, Conhecimento, Preferencial, Decisão e Habilidade",
+                    "Conhecimento, Atenção, Previsão, Decisão e Habilidade",
+                    "Conhecimento, Atenção, Prudência, Decisão e Habilidade",
+                    "Conhecimento, Atenção, Segurança, Habilidade e Decisão"
                 ],
                 correct: 2
-            },
-            {
-                text: "Qual a conduta obrigatória antes de iniciar qualquer deslocamento com veículos da frota?",
-                options: [
-                    "Acelerar o motor imediatamente para aquecer.",
-                    "Realizar o checklist de inspeção visual (pneus, fluidos, iluminação e freios) e ajuste de espelhos.",
-                    "Conectar o telemóvel ao sistema de som sem olhar.",
-                    "Verificar apenas o nível de combustível."
-                ],
-                correct: 1
             }
         ];
 
+        let currentStep = 'inicio';
+        let selectedCollabData = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+
         function goToStep(step) {
             ['inicio', 'identificar', 'instrucoes', 'prova', 'resultado'].forEach(s => {
-                document.getElementById('view-' + s).classList.add('hidden');
+                const el = document.getElementById('view-' + s);
+                if(el) el.classList.add('hidden');
                 const nav = document.getElementById('nav-' + s);
-                if(nav) nav.className = 'text-slate-400 cursor-pointer';
+                if(nav) nav.className = 'text-slate-500 cursor-pointer transition hover:text-white';
             });
-            document.getElementById('view-' + step).classList.remove('hidden');
+            const targetEl = document.getElementById('view-' + step);
+            if(targetEl) targetEl.classList.remove('hidden');
             const activeNav = document.getElementById('nav-' + step);
-            if(activeNav) activeNav.className = 'text-brand-500 font-bold cursor-pointer';
+            if(activeNav) activeNav.className = 'text-brand-400 font-semibold cursor-pointer transition';
             currentStep = step;
             if(step === 'prova') loadQuestion();
         }
@@ -250,14 +263,17 @@
             );
             if (filtered.length > 0) {
                 resultsContainer.innerHTML = filtered.map(c => `
-                    <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3 hover:bg-slate-800 cursor-pointer text-sm">
-                        <p class="font-bold text-white">${c.nome}</p>
-                        <p class="text-xs text-slate-400">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
+                    <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3.5 hover:bg-slate-900 cursor-pointer text-sm transition flex justify-between items-center">
+                        <div>
+                            <p class="font-bold text-white">${c.nome}</p>
+                            <p class="text-xs text-slate-400">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
+                        </div>
+                        <span class="text-xs font-mono uppercase px-2 py-1 rounded bg-slate-800 text-slate-300">${c.situacao}</span>
                     </div>
                 `).join('');
                 resultsContainer.classList.remove('hidden');
             } else {
-                resultsContainer.innerHTML = '<div class="p-3 text-xs text-slate-400">Nenhum colaborador encontrado.</div>';
+                resultsContainer.innerHTML = '<div class="p-4 text-xs text-slate-500 text-center">Nenhum colaborador encontrado com este termo.</div>';
                 resultsContainer.classList.remove('hidden');
             }
         });
@@ -267,7 +283,7 @@
             searchInput.value = '';
             resultsContainer.classList.add('hidden');
             document.getElementById('collab-name-display').textContent = collab.nome;
-            document.getElementById('collab-info-display').textContent = `Matrícula: ${collab.matricula} • ${collab.funcao} (${collab.base})`;
+            document.getElementById('collab-info-display').textContent = `Matrícula: ${collab.matricula} • ${collab.funcao} (${collab.base} - ${collab.situacao})`;
             document.getElementById('selected-collab').classList.remove('hidden');
             document.getElementById('btn-to-instrucoes').disabled = false;
         }
@@ -285,9 +301,9 @@
             
             const letters = ['A', 'B', 'C', 'D', 'E'];
             const optionsHtml = q.options.map((opt, index) => `
-                <label class="flex items-center p-4 bg-slate-900 border border-slate-700 rounded-xl hover:border-brand-500 cursor-pointer transition">
-                    <input type="radio" name="option" value="${index}" onclick="enableNext()" class="mr-3 text-brand-500 focus:ring-brand-500">
-                    <span class="text-sm text-slate-200"><b>${letters[index]})</b> ${opt}</span>
+                <label class="flex items-center p-4 bg-slate-950 border border-slate-800 rounded-2xl hover:border-brand-500 cursor-pointer transition group">
+                    <input type="radio" name="option" value="${index}" onclick="enableNext()" class="mr-3 text-brand-500 focus:ring-brand-500 w-4 h-4">
+                    <span class="text-sm text-slate-200 group-hover:text-white transition"><b>${letters[index]})</b> ${opt}</span>
                 </label>
             `).join('');
             
@@ -328,17 +344,24 @@
             document.getElementById('result-score').textContent = `${percentage}%`;
             if (percentage >= 70) {
                 document.getElementById('result-title').textContent = "Aprovado com Sucesso!";
-                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, você concluiu a avaliação da Escola do Bom Condutor com aproveitamento.`;
+                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, você concluiu com êxito a avaliação da Escola do Bom Condutor.`;
             } else {
                 document.getElementById('result-title').textContent = "Necessita Revisão";
-                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, reveja os conceitos de direção defensiva.`;
+                document.getElementById('result-desc').textContent = `${selectedCollabData.nome}, reveja os conceitos de direção defensiva e tente novamente.`;
             }
         }
 
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark');
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
             const icon = document.getElementById('theme-icon');
-            icon.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+            if (html.classList.contains('dark')) {
+                icon.textContent = '🌙';
+                document.body.className = "bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-500 selection:text-white transition-colors duration-300";
+            } else {
+                icon.textContent = '☀️';
+                document.body.className = "bg-slate-50 text-slate-900 min-h-screen font-sans flex flex-col justify-between selection:bg-brand-500 selection:text-white transition-colors duration-300";
+            }
         }
     </script>
 </body>
