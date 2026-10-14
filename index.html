@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escola do Bom Condutor - CGB Energia</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-slate-50 min-h-screen font-sans">
 
@@ -16,7 +15,7 @@
                 <h1 class="text-lg font-bold tracking-wide">ESCOLA DO BOM CONDUTOR</h1>
                 <p class="text-xs text-yellow-400">CGB Energia - Segurança e Direção Defensiva</p>
             </div>
-            <span class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300">Sistema Oficial v2.0</span>
+            <span class="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300">Sistema Oficial v2.1</span>
         </div>
     </header>
 
@@ -87,15 +86,19 @@
 
     </main>
 
-    <!-- Script Completo -->
+    <!-- Script de Execução Local Estável -->
     <script>
-        const SUPABASE_URL = 'https://jwzqjidbhuhutffhslw.supabase.co';
-        const SUPABASE_ANON_KEY = 'sua-chave-anon-aqui';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
         let selectedCollabData = null;
         let currentQuestionIndex = 0;
         let score = 0;
+
+        const colaboradoresData = [
+            { nome: "MARCUS VINICIUS SILVA QUEIROS", matricula: "12375", funcao: "ANALISTA DE QUALIDADE I", base: "BACABAL" },
+            { nome: "ABEL RODRIGUES DE ARAUJO", matricula: "14035", funcao: "ELETRICISTA", base: "BACABAL" },
+            { nome: "ABRAAO DOS SANTOS SILVA", matricula: "13795", funcao: "ELETRICISTA", base: "BACABAL" },
+            { nome: "ANTONIO CARLOS SILVA", matricula: "12501", funcao: "ENCARREGADO DE TURMA", base: "BACABAL" },
+            { nome: "FRANCISCO DAS CHAGAS LIMA", matricula: "11982", funcao: "MOTORISTA OPERACIONAL", base: "BACABAL" }
+        ];
 
         const questions = [
             {
@@ -153,37 +156,29 @@
         const searchInput = document.getElementById('search-input');
         const resultsContainer = document.getElementById('results-container');
 
-        searchInput.addEventListener('input', async (e) => {
-            const query = e.target.value.trim();
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
             if (query.length < 2) {
                 resultsContainer.classList.add('hidden');
                 return;
             }
 
-            try {
-                const { data, error } = await supabaseClient
-                    .from('colaboradores')
-                    .select('*')
-                    .or(`nome.ilike.%${query}%,matricula.ilike.%${query}%,base.ilike.%${query}%`)
-                    .limit(15);
+            const filtered = colaboradoresData.filter(c => 
+                c.nome.toLowerCase().includes(query) || 
+                c.matricula.toLowerCase().includes(query) || 
+                c.base.toLowerCase().includes(query)
+            );
 
-                if (error) throw error;
-
-                if (data && data.length > 0) {
-                    resultsContainer.innerHTML = data.map(c => `
-                        <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3 hover:bg-slate-100 cursor-pointer text-sm">
-                            <p class="font-bold text-slate-800">${c.nome}</p>
-                            <p class="text-xs text-slate-500">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
-                        </div>
-                    `).join('');
-                    resultsContainer.classList.remove('hidden');
-                } else {
-                    resultsContainer.innerHTML = '<div class="p-3 text-xs text-slate-500">Nenhum colaborador encontrado.</div>';
-                    resultsContainer.classList.remove('hidden');
-                }
-            } catch (err) {
-                console.error("Erro na busca:", err);
-                resultsContainer.innerHTML = '<div class="p-3 text-xs text-red-500">Erro ao consultar base de dados.</div>';
+            if (filtered.length > 0) {
+                resultsContainer.innerHTML = filtered.map(c => `
+                    <div onclick='selectCollab(${JSON.stringify(c)})' class="p-3 hover:bg-slate-100 cursor-pointer text-sm">
+                        <p class="font-bold text-slate-800">${c.nome}</p>
+                        <p class="text-xs text-slate-500">Mat: ${c.matricula} | Função: ${c.funcao} | Base: ${c.base}</p>
+                    </div>
+                `).join('');
+                resultsContainer.classList.remove('hidden');
+            } else {
+                resultsContainer.innerHTML = '<div class="p-3 text-xs text-slate-500">Nenhum colaborador encontrado.</div>';
                 resultsContainer.classList.remove('hidden');
             }
         });
